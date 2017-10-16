@@ -14,7 +14,7 @@ https://www.coursera.org/learn/aadcapstone/home/welcome
 Requirements for projects are 
 
 - Interact with at least one remotely-hosted web service over the network via HTTP.
-- Allow users to navigate between at least two different user interface screens at runtime, 
+- Allow users to navigate between at least two different user interface screens at runtime.
 
 Example given was 
 
@@ -23,7 +23,7 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 * a ListView showing all RSS Feed Stories,
 * a detail View showing a single Feed Story, and
 * a Settings view for configuring information about the App’s settings.
-** use the Junit testing framework to implement unit and integration tests for their application
+** use the Junit testing framework to implement unit and integration tests for their application.
 ** tests must cover the functionality of the app. 
 ** Support persistent storage of information in an app’s content provider.
 * Have well documented source code and a short video that shows how your app works when it's run.
