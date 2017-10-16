@@ -7,7 +7,7 @@ Snapshots:
 ![list][list]
 ![item][item]
 
-[list]: https://github.com/nikkijuk/PlainRssReader/docs/feed-list.png "List of feeds"
-[item]: https://github.com/nikkijuk/PlainRssReader/docs/feed-item.png "Feed item"
+[list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-list.png "List of feeds"
+[item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-item.png "Feed item"
 
 
