@@ -34,7 +34,7 @@ Current implementation doesn't cover settings, but support will be added later
 - Feed address is hardcoded
 
 No persistence implemented
-. Feed isn't saved locally, but is always retrieved from server
+- Feed isn't saved locally, but is always retrieved from server
 
 Snapshots: 
 
