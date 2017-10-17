@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:key="rss_source"
+        android:title="@string/title_rss_source"
+        android:summary="@string/summary_rss_source"
+        android:dialogTitle="@string/dialog_title_rss_source" />
+
+</PreferenceScreen>

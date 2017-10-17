@@ -49,4 +49,8 @@ Selected item
 [list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-list.png "List of feeds"
 [item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-item.png "Feed item"
 
+Helpful articles
 
+https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/
+
+http://www.cs.dartmouth.edu/~campbell/cs65/lecture12/lecture12.html
