@@ -117,7 +117,8 @@ It's tempting to think that there's a way to know all details in advance and one
 Requirements of Mooc dictate how app should be implemented by stating:
 
 ```
-Comprise at least one instance each of the following fundamental Android component categories covered in the four previous Content MOOCs in the AAD Specialization:
+Comprise at least one instance each of the following fundamental Android component categories 
+covered in the four previous Content MOOCs in the AAD Specialization:
 - Activity
 - BroadcastReceiver
 - Service (Bound or Started)
