@@ -56,6 +56,12 @@ I'll try later to expand application with selected [Android architecture compone
 
 It's tempting to think that there's a way to know all details in advance and one could start work once plan in finished. I have taken different stance. Design evolves as I have more information, knowledge or time, and implementation follows design immendiately. Some call this iterative software development.
 
+# Use cases
+
+[yEd] was used to draw simple diagram of use cases.
+
+![UML use case diagram of app]
+
 # Classes
 
 [Reverse engineering UML model with Andoid studio] was done with [SimpleUMLCe].
@@ -122,6 +128,7 @@ No junit tests for functionality
 
 User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there.
 
+[yEd]: https://www.yworks.com/products/yed "yEd diagramming software"
 
 [use recycler-view]: https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/ "how to use recycler view, adapter and holder"
 
@@ -159,7 +166,9 @@ User given url is not checked, and when trying to use wrong url during startup a
 
 [Lombok issue]: https://github.com/googlesamples/android-architecture-components/issues/120 "Lombok Room integration blocker"
 
-[UML class diagram of feed model]:  https://github.com/nikkijuk/PlainRssReader/blob/master/docs/feed-model.png "Feeds model classes"
+[UML use case diagram of app]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader-UseCases.png "Apps use cases"
+
+[UML class diagram of feed model]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/feed-model.png "Feeds model classes"
 
 [list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-list.png "List of feeds"
 [item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-item.png "Feed item"
