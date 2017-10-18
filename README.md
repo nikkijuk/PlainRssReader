@@ -23,13 +23,16 @@ Repositorys docs directory contains resources which accompany this documentation
 
 Requirements for projects are 
 
+```
 - Interact with at least one remotely-hosted web service over the network via HTTP.
 - Allow users to navigate between at least two different user interface screens at runtime.
+```
 
 Example given was 
 
 a hypothetical RSS/Atom reader app might have multiple screens, such as
 
+```
 * a ListView showing all RSS Feed Stories,
 * a detail View showing a single Feed Story, and
 * a Settings view for configuring information about the App’s settings.
@@ -37,6 +40,7 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
   - tests must cover the functionality of the app. 
   - Support persistent storage of information in an app’s content provider.
 * Have well documented source code and a short video that shows how your app works when it's run.
+```
 
 As I've wanted to test technical abilities more than implement novel solutions I've decided to implement stripped down RSS reader as suggested.
 
@@ -107,6 +111,26 @@ Use [PlantUml testbench] if you want to experiment with given source.
 "there's no way to design the software in advance. Instead, you must design your software based on its current needs, and evolve the software design as the requirements change. This process is called [evolutionary design]." - James Shore.
 
 It's tempting to think that there's a way to know all details in advance and one could start work once plan in finished. I have taken different stance. Design evolves as I have more information, knowledge or time, and implementation follows design immendiately. Some call this iterative software development.
+
+# Design Decisions
+
+Requirements of Mooc dictate how app should be implemented by stating:
+
+```
+Comprise at least one instance each of the following fundamental Android component categories covered in the four previous Content MOOCs in the AAD Specialization:
+- Activity
+- BroadcastReceiver
+- Service (Bound or Started)
+- ContentProvider.
+```
+
+Content providers won't be used, as stated on [Sample content provider] code, "ou don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". Implementing content provider would add complexity without any gains, so it's easier, faster and better to use Sql-Lite directly or using [Room].
+
+Needless to say, that same applies to BroadcastReveiver and Service components, if there's no real need to use them. 
+
+BroadcastReceivers could be possibly used to listen network state, so that calls external services would be only allowed when network is present and status of network would be updated based on system notifications. This needs still to be investigated.
+
+Services are most propably not needed. App doesn't expose services to other applications, and thus there's no need to separater processes which could be used from external apps. Neither calling possibly unreliable http api's do not need services, as simply async task does the trick, and allows calling http endpoint outside of UI thread. 
 
 # Use cases
 
@@ -222,6 +246,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Android architecture components]: https://developer.android.com/topic/libraries/architecture/index.html "Android architecure components by Google"
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
+
+[Sample content provider]: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceContentProviderSample/app/src/main/java/com/example/android/contentprovidersample/provider/SampleContentProvider.java "Sample content provider"
 
 [GSON]: https://github.com/google/gson "Googles serialization library"
 
