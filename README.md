@@ -52,7 +52,15 @@ I'll try later to expand application with selected [Android architecture compone
 
 # Design
 
+"there's no way to design the software in advance. Instead, you must design your software based on its current needs, and evolve the software design as the requirements change. This process is called [evolutionary design]." - James Shore.
+
+It's tempting to think that there's a way to know all details in advance and one could start work once plan in finished. I have taken different stance. Design evolves as I have more information, knowledge or time, and implementation follows design immendiately. Some call this iterative software development.
+
 # Classes
+
+[Reverse engineering UML model with Andoid studio] was done with [SimpleUMLCe].
+
+![UML class diagram of feed model] 
 
 # Mockups
 
@@ -132,6 +140,12 @@ Helpful articles
 
 [Software architecture]: https://kylecordes.com/2015/fowler-software-architecture
 
+[evolutionary design]: http://www.jamesshore.com/In-the-News/Evolutionary-Design-Illustrated-Video.html "Evolutionary desing"
+
+[Reverse engineering UML model with Andoid studio]: https://stackoverflow.com/questions/17123384/how-to-generate-class-diagram-uml-on-android-studio/36823007#36823007 "Reverse engineering UML model with Andoid studio"
+
+[SimpleUMLCe]: https://plugins.jetbrains.com/plugin/4946-simpleumlce "very simple uml diagramming tool"
+
 [Android architecture components]: https://developer.android.com/topic/libraries/architecture/index.html "Android architecure components by Google"
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
@@ -143,6 +157,8 @@ Helpful articles
 [Lombok]: https://projectlombok.org/features/Data "Lombok data annotation"
 
 [Lombok issue]: https://github.com/googlesamples/android-architecture-components/issues/120 "Lombok Room integration blocker"
+
+[UML class diagram of feed model]:  https://github.com/nikkijuk/PlainRssReader/blob/master/docs/feed-model.png "Feeds model classes"
 
 [list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-list.png "List of feeds"
 [item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-item.png "Feed item"
