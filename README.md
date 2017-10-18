@@ -44,11 +44,58 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 
 "[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler.
 
-Development is done using [Android Studio]. Currently 3.0 RC1, but it has [Java 8 support] and lambdas are pretty nice.
+Development is done using [Android Studio]. Currently 3.0 RC1, 'cos it has [Java 8 support] and lambdas are pretty nice.
 
 I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16].
 
 I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence.
+
+XML to Json conversion is done using [rss2json] service.
+
+[Gson] is used to marshall returned JSON to Plain Java Pojos.
+
+# Architecture diagrams
+
+[PlantUml] is used to illustrate high level structure of application.
+
+![UML component diagram of app]
+
+It's easy to write uml models with [PlantUml] when you have practiced it a bit. Here's source of components diagram.
+
+```
+@startuml
+package "PlainRssReader" {
+  [SettingsActivity]
+  [FeedActivity] 
+  [RecyclerView]
+  [PreferenceFragment]
+}
+
+package "AndroidServices" {
+  [AndroidBrowser] 
+}
+
+cloud {
+  [RssToJsonConverter]
+}
+
+cloud {
+  [RssFeedProducer]
+}
+
+[FeedActivity] -up-> [SettingsActivity]:configure rss feeds url
+
+[FeedActivity] - [RecyclerView]:browse feed
+[SettingsActivity] - [PreferenceFragment]:edit url
+
+[FeedActivity] --> [AndroidBrowser]:ask browser to show article 
+[AndroidBrowser] --> [RssFeedProducer]:get single artice as html
+
+[FeedActivity] --> [RssToJsonConverter]:get rss feed as json
+[RssToJsonConverter] --> [RssFeedProducer]:get rss feed as xml
+@enduml
+```
+Use [PlantUml testbench] if you want to experiment with given source.
 
 # Design
 
@@ -150,6 +197,10 @@ User given url is not checked, and when trying to use wrong url during startup a
 
 [evolutionary design]: http://www.jamesshore.com/In-the-News/Evolutionary-Design-Illustrated-Video.html "Evolutionary desing"
 
+[PlantUml]: http://plantuml.com/ "Fantastic text based modeling tool"
+
+[PlantUml testbench]: www.plantuml.com/plantuml/ "simple service to verify PlantUml markup"
+
 [Reverse engineering UML model with Andoid studio]: https://stackoverflow.com/questions/17123384/how-to-generate-class-diagram-uml-on-android-studio/36823007#36823007 "Reverse engineering UML model with Andoid studio"
 
 [SimpleUMLCe]: https://plugins.jetbrains.com/plugin/4946-simpleumlce "very simple uml diagramming tool"
@@ -158,6 +209,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
 
+[GSON]: https://github.com/google/gson "Googles serialization library"
+
 [AutoValue]: https://github.com/google/auto/tree/master/value "AutoValue for generation of Value objects"
 
 [AutoValue issue]: https://developer.android.com/topic/libraries/architecture/room.html "AutoValue Room integration blocker"
@@ -165,6 +218,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Lombok]: https://projectlombok.org/features/Data "Lombok data annotation"
 
 [Lombok issue]: https://github.com/googlesamples/android-architecture-components/issues/120 "Lombok Room integration blocker"
+
+[UML component diagram of app]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader-components.png "Apps components"
 
 [UML use case diagram of app]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader-UseCases.png "Apps use cases"
 
