@@ -60,6 +60,8 @@ It's tempting to think that there's a way to know all details in advance and one
 
 [Reverse engineering UML model with Andoid studio] was done with [SimpleUMLCe].
 
+Model classes store retrieved articles
+
 ![UML class diagram of feed model] 
 
 # Mockups
