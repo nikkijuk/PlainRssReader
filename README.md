@@ -44,7 +44,9 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 
 "[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler.
 
-I have decided to start with simple architecure with more or less vanilla android components and API-level 16.
+Development is done using [Android Studio]. Currently 3.0 RC1, but it has [Java 8 support] and lambdas are pretty nice.
+
+I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16].
 
 I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence.
 
@@ -115,6 +117,12 @@ Helpful articles
 [use recycler-view]: https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/ "how to use recycler view, adapter and holder"
 
 [use preferences]: http://www.cs.dartmouth.edu/~campbell/cs65/lecture12/lecture12.html "how to use preferences fragment"
+
+[Android studio]: https://developer.android.com/studio/preview/index.html "Android studio 3.0 RC1"
+
+[Java 8 support]: https://developer.android.com/studio/write/java8-support.html "Android studio java 8 support"
+
+[API-level 16]: https://developer.android.com/about/versions/android-4.1.html "Android 4.1 / Api-level 16"
 
 [Default feed]: http://rss.nytimes.com/services/xml/rss/nyt/Science.xml "Ny Times science feed"
 
