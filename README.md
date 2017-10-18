@@ -93,17 +93,6 @@ Storing and changing settings is implemented using PreferefencesFragment as defi
 
 Due to limiations and interoperability issues with [Room] annotation processors [AutoValue] and [Lombok] aren't used to reduce boilerplate code, see [AutoValue issue] and [Room issue] for deeper discussion.
 
-# Missing features
-
-No persistence implemented
-- Feed isn't saved locally, but is always retrieved from server
-
-No junit tests for functionality
-
-# Known bugs
-
-User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there.
-
 # Snapshots of current implementation
 
 List of items
@@ -122,7 +111,17 @@ change url dialog
 
 ![settings-url]
 
-Helpful articles
+# Missing features
+
+No persistence implemented
+- Feed isn't saved locally, but is always retrieved from server
+
+No junit tests for functionality
+
+# Known bugs
+
+User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there.
+
 
 [use recycler-view]: https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/ "how to use recycler view, adapter and holder"
 
@@ -152,7 +151,7 @@ Helpful articles
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
 
-[AutoValue]: https://github.com/google/auto/tree/master/value "AutoValue for generation of Value objects
+[AutoValue]: https://github.com/google/auto/tree/master/value "AutoValue for generation of Value objects"
 
 [AutoValue issue]: https://developer.android.com/topic/libraries/architecture/room.html "AutoValue Room integration blocker"
 
