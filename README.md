@@ -112,9 +112,9 @@ Use [PlantUml testbench] if you want to experiment with given source.
 
 It's tempting to think that there's a way to know all details in advance and one could start work once plan in finished. I have taken different stance. Design evolves as I have more information, knowledge or time, and implementation follows design immendiately. Some call this iterative software development.
 
-# Design Decisions
+# Design Discussion 
 
-Requirements of Mooc dictate how app should be implemented by stating:
+Requirements of Mooc dictate how app should be implemented by stating
 
 ```
 Comprise at least one instance each of the following fundamental Android component categories 
@@ -125,13 +125,17 @@ covered in the four previous Content MOOCs in the AAD Specialization:
 - ContentProvider.
 ```
 
-Content providers won't be used, as stated on [Sample content provider] code, "ou don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". Implementing content provider would add complexity without any gains, so it's easier, faster and better to use Sql-Lite directly or using [Room].
+Content providers won't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". Implementing content provider would add complexity without any gains, so it's easier, faster and better to use Sql-Lite directly or using [Room].
 
 Needless to say, that same applies to BroadcastReveiver and Service components, if there's no real need to use them. 
 
 BroadcastReceivers could be possibly used to listen network state, so that calls external services would be only allowed when network is present and status of network would be updated based on system notifications. This needs still to be investigated.
 
-Services are most propably not needed. App doesn't expose services to other applications, and thus there's no need to separater processes which could be used from external apps. Neither calling possibly unreliable http api's do not need services, as simply async task does the trick, and allows calling http endpoint outside of UI thread. 
+BroadcastReceivers are also able to process return values from IntentServices or other asynchronously working background operations, and thus it would be possible to use local broadcasts to application internal communication if this is needed.
+
+Services might not needed. App doesn't expose services to other applications, and thus there's no need to separater processes which could be used from external apps. Calling possibly unreliable http api's do not need services if simply async task does the trick and allows calling http endpoint outside of UI thread. 
+
+It seems that services have some benefits over AsyncTasks, which are bound to UI, and are gone is Activity is killed as part of configuration change due to device orientation change. If AsyncTasks compromise reliability of app, it might mean that IntentService is needed for syncing rss feeds, and thus also local broadcasts to return results of sync.
 
 # Use cases
 
