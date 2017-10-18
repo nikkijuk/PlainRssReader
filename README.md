@@ -46,7 +46,7 @@ As I've wanted to test technical abilities more than implement novel solutions I
 
 Development is done using [Android Studio], which is currently at 3.0 RC1. RC is used 'cos it has [Java 8 support] and lambdas are pretty nice.
 
-I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16]. Java 8 Streams are not used, since they doesn't exist before API-level 24. [Android devices] with API-level 24 are still not commonly in used.
+I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16] or [API-level 19]. Java 8 Streams are not used, since they doesn't exist before API-level 24. [Android devices] with API-level 24 are still not commonly in used.
 
 XML to Json conversion is done using [rss2json] service. [Gson] is used to marshall returned JSON to Plain Java Pojos.
 
@@ -196,6 +196,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Java 8 support]: https://developer.android.com/studio/write/java8-support.html "Android studio java 8 support"
 
 [API-level 16]: https://developer.android.com/about/versions/android-4.1.html "Android 4.1 / Api-level 16"
+
+[API-level 19]: https://developer.android.com/about/versions/android-4.4.html "Android 4.4 / Api-level 19"
 
 [Android devices]: https://developer.android.com/about/dashboards/index.html "Android devices in use"
 
