@@ -28,6 +28,20 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
   - Support persistent storage of information in an app’s content provider.
 * Have well documented source code and a short video that shows how your app works when it's run.
 
+# Mockups
+
+List of items
+
+![mockup-list]
+
+Selected item
+
+![mockup-item]
+
+settings
+
+![mockup-settings]
+
 # Implementation
 
 Browsing items is implemented using recycler view as defined in [use recycler-view]
@@ -43,7 +57,7 @@ No persistence implemented
 
 User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there.
 
-# Snapshots
+# Snapshots of current implementation
 
 List of items
 
@@ -61,6 +75,12 @@ change url dialog
 
 ![settings-url]
 
+Helpful articles
+
+[use recycler-view]: https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/ "how to use recycler view, adapter and holder"
+
+[use preferences]: http://www.cs.dartmouth.edu/~campbell/cs65/lecture12/lecture12.html "how to use preferences fragment"
+
 
 
 [list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-list.png "List of feeds"
@@ -68,8 +88,6 @@ change url dialog
 [settings]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/settings.png "Settings"
 [settings-url]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/settings-url.png "Set feed url"
 
-Helpful articles
-
-[use recycler-view]: https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/ "how to use recycler view, adapter and holder"
-
-[use preferences]: http://www.cs.dartmouth.edu/~campbell/cs65/lecture12/lecture12.html "how to use preferences fragment"
+[mockup-list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-list.png "Mockup: List of feeds"
+[mockup-item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-item.png "Mockup: Feed item"
+[mockup-settings]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-settings.png "Mockup: Settings"
