@@ -11,13 +11,11 @@ https://www.coursera.org/learn/aadcapstone/home/welcome
 
 # Documentation
 
-I have prepared README.md to explains application at a high level. 
-
-Readme contains references to further architecture, design and implementation artifacts like mockups, uml diagrams, screenshots, etc.
+I have prepared README.md to explain application at a high level. Readme contains references to further architecture, design and implementation artifacts like mockups, uml diagrams, screenshots, etc.
 
 # Repository
 
-Intead of having private GitLab repository as Mooc suggested I've decided to go with publig github account to share my experience with larger community.
+Instead of having private GitLab repository as Mooc suggested I've decided to go with publig github account to share my experience with larger community.
 
 Repositorys docs directory contains resources which accompany this documentation, otherwise repository contains solely application artifacts.
 
@@ -40,23 +38,30 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
   - Support persistent storage of information in an app’s content provider.
 * Have well documented source code and a short video that shows how your app works when it's run.
 
+As I've wanted to test technical abilities more than implement novel solutions I've decided to implement stripped down RSS reader as suggested.
+
 # Architecture 
 
 "[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler.
 
-Development is done using [Android Studio]. Currently 3.0 RC1, 'cos it has [Java 8 support] and lambdas are pretty nice.
+Development is done using [Android Studio], which is currently at 3.0 RC1. RC is used 'cos it has [Java 8 support] and lambdas are pretty nice.
 
-I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16].
+I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16]. Java 8 Streams are not used, since they doesn't exist before API-level 24. [Android devices] with API-level 24 are still not commonly in used.
 
-I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence.
+XML to Json conversion is done using [rss2json] service. [Gson] is used to marshall returned JSON to Plain Java Pojos.
 
-XML to Json conversion is done using [rss2json] service.
+I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence. 
 
-[Gson] is used to marshall returned JSON to Plain Java Pojos.
+I'm considering to use
+- Dagger 2
+- Retrofit
+- Android annotations
+
+But it will be of highest priority to keep code working, not to polish it with unnecessary features and add code and libraries without real benefits. For this reason Guava is not yet in use, even if I see it as useful tool.
 
 # Architecture diagrams
 
-[PlantUml] is used to illustrate high level structure of application.
+[PlantUml] is used to illustrate high level structure of application. UML diagrams are written using textual DSL. 
 
 ![UML component diagram of app]
 
@@ -117,6 +122,8 @@ Model classes store retrieved articles
 
 ![UML class diagram of feed model] 
 
+It wouldn't be necessary to store all attributes of rss feed, but it's done here for completeness.
+
 # Mockups
 
 Mockups were prepared with [marvel app]
@@ -133,18 +140,19 @@ settings
 
 ![mockup-settings]
 
+I did have trial versio in use, and for this reason I needed to take snapshots from screens instead of neatly exporting results to files.
 
 # Implementation
 
 Rss feed reading is proxied thru [rss2json] service, which converts feed to json on the fly.
 
-When no feed is defined [Default feed] is used.
+Feed url is read from preferences. When no feed is defined [Default feed] is used.
 
-Browsing items is implemented using recycler view as defined in [use recycler-view]
+Browsing items is implemented using RecyclerView as defined in [use recycler-view]
 
 Storing and changing settings is implemented using PreferefencesFragment as defined in [use preferences]
 
-Due to limiations and interoperability issues with [Room] annotation processors [AutoValue] and [Lombok] aren't used to reduce boilerplate code, see [AutoValue issue] and [Room issue] for deeper discussion.
+Due to limiations and interoperability issues with [Room] annotation processors [AutoValue] and [Lombok] aren't used to reduce boilerplate code of model classes, see [AutoValue issue] and [Room issue] for deeper discussion.
 
 # Snapshots of current implementation
 
@@ -169,11 +177,13 @@ change url dialog
 No persistence implemented
 - Feed isn't saved locally, but is always retrieved from server
 
-No junit tests for functionality
+No junit tests for real functionality
+- Only single dummy test present
 
 # Known bugs
 
-User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there.
+User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there. 
+- This bug is pretty annoying, since after giving false URL one needs to manually clear setting of App to get it starting again.
 
 [yEd]: https://www.yworks.com/products/yed "yEd diagramming software"
 
@@ -186,6 +196,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Java 8 support]: https://developer.android.com/studio/write/java8-support.html "Android studio java 8 support"
 
 [API-level 16]: https://developer.android.com/about/versions/android-4.1.html "Android 4.1 / Api-level 16"
+
+[Android devices]: https://developer.android.com/about/dashboards/index.html "Android devices in use"
 
 [Default feed]: http://rss.nytimes.com/services/xml/rss/nyt/Science.xml "Ny Times science feed"
 
