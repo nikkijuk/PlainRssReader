@@ -30,6 +30,8 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 
 # Mockups
 
+Mockups were prepared with [marvel app]
+
 List of items
 
 ![mockup-list]
@@ -42,6 +44,11 @@ settings
 
 ![mockup-settings]
 
+# Architecture 
+
+"[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler
+
+
 # Implementation
 
 Browsing items is implemented using recycler view as defined in [use recycler-view]
@@ -52,6 +59,8 @@ Storing and changing settings is implemented using PreferefencesFragment as defi
 
 No persistence implemented
 - Feed isn't saved locally, but is always retrieved from server
+
+No junit tests for functionality
 
 # Known bugs
 
@@ -81,7 +90,9 @@ Helpful articles
 
 [use preferences]: http://www.cs.dartmouth.edu/~campbell/cs65/lecture12/lecture12.html "how to use preferences fragment"
 
+[marvel app]: https://marvelapp.com/ "Mockups for iOs, Android, Web, etc."
 
+[Software architecture]: https://kylecordes.com/2015/fowler-software-architecture
 
 [list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-list.png "List of feeds"
 [item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/news-item.png "Feed item"
