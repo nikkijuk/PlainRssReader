@@ -70,9 +70,9 @@ XML to Json conversion is done using [rss2json] service. [Gson] is used to marsh
 I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence. 
 
 I'm considering to use
-- Dagger 2
-- Retrofit
-- Android annotations
+- [Dagger]
+- [Retrofit]
+- [Android annotations]
 
 But it will be of highest priority to keep code working, not to polish it with unnecessary features and add code and libraries without real benefits. For this reason Guava is not yet in use, even if I see it as useful tool.
 
@@ -264,6 +264,12 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Android architecture components]: https://developer.android.com/topic/libraries/architecture/index.html "Android architecure components by Google"
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
+
+[Dagger]: https://google.github.io/dagger/ "dependency injection done with generated classes"
+
+[Retrofit]: http://square.github.io/retrofit/ "simplify http api's"
+
+[Android annotations]: http://androidannotations.org/ "annotation processor and code generator for boilerplate code"
 
 [Sample content provider]: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceContentProviderSample/app/src/main/java/com/example/android/contentprovidersample/provider/SampleContentProvider.java "Sample content provider"
 
