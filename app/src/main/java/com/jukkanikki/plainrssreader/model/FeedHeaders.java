@@ -1,5 +1,8 @@
 package com.jukkanikki.plainrssreader.model;
 
+/**
+* Metadata of feed. Not really needed.
+*/
 public class FeedHeaders {
 
     public String url;
