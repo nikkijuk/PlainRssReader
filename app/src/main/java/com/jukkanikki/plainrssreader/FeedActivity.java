@@ -26,20 +26,27 @@ import com.jukkanikki.plainrssreader.model.FeedWrapper;
 
 public class FeedActivity extends AppCompatActivity {
 
+    // Key for preferences reading
     private static final String KEY_PREF_SOURCE = "rss_source";
 
-    private final static String DEFAULT_RSS_URL ="http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
+    // Xml to Json conversion api
     private final static String RSS_TO_JSON_API_API = "https://api.rss2json.com/v1/api.json?rss_url=";
+    
+    // Default feed used
+    private final static String DEFAULT_RSS_URL ="http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
 
     private RecyclerView recyclerView;
 
+    /**
+    * Called when activity is created
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("News");
+        toolbar.setTitle("News"); // TODO: move hardcoded value to Strings.xml
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -47,6 +54,9 @@ public class FeedActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
+    /**
+    * Called when activity comes visible
+    */
     @Override
     protected void onResume () {
         super.onResume();
