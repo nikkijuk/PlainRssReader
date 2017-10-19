@@ -5,10 +5,9 @@ converts them to json using web api and allows browsing thru simple list
 
 # Background
 
-Implementation has been created as part of Coursera Android Proramming moocs Capstone Project. Protocol used is https.
+Implementation has been created as part of Coursera Android Proramming moocs Capstone Project. 
 
-Example of calling background service
-
+More info
 ```
 https://www.coursera.org/learn/aadcapstone/home/welcome
 ```
@@ -50,10 +49,14 @@ As I've wanted to test technical abilities more than implement novel solutions I
 
 # External services
 
- [rss2json] is api is used to retrieve and convert rss feeds to json
+ [rss2json] is api is used to retrieve and convert rss feeds to json. Protocol used is https.
 
+Example url of background service. rss_url query parameter defines source of rss feed.
+
+```
  https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss
-
+```
+ 
 # Architecture 
 
 "[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler.
