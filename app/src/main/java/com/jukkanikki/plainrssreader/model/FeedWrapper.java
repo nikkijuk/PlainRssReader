@@ -2,11 +2,16 @@ package com.jukkanikki.plainrssreader.model;
 
 import java.util.List;
 
+/**
+* Feed wrapper represents root element of json structure
+*
+* Many fields are never used in this application, but they are here since they MIGHT be needed.
+*/
 public class FeedWrapper {
 
     public String status;
-    public FeedHeaders feed;
-    public List<FeedItem> items;
+    public FeedHeaders feed; // header info, metadata of feed, not used
+    public List<FeedItem> items; // actual articles
 
     public FeedWrapper(String status, FeedHeaders feed, List<FeedItem> items) {
         this.status = status;
