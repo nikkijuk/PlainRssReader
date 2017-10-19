@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+* Simple utility class to help on reading http stream.
+*/
 public class HttpReader {
 
     public static String getData(String urlString)
