@@ -2,6 +2,9 @@ package com.jukkanikki.plainrssreader.model;
 
 import java.util.List;
 
+/**
+* Article content.
+*/
 public class FeedItem {
 
     public String title;
