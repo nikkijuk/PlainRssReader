@@ -45,10 +45,12 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
+        // get toolbar and set it in use
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("News"); // TODO: move hardcoded value to Strings.xml
         setSupportActionBar(toolbar);
 
+        // find view and set layout
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -60,7 +62,7 @@ public class FeedActivity extends AppCompatActivity {
     @Override
     protected void onResume () {
         super.onResume();
-        loadRSS();
+        loadRSS(); 
     }
 
         @Override
@@ -96,20 +98,20 @@ public class FeedActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... params) {
-                return HttpReader.getData(params[0]);
+                return HttpReader.getData(params[0]); // get http string
             }
 
             @Override
             protected void onPostExecute(String s) {
-                FeedWrapper feed = new Gson().fromJson(s, FeedWrapper.class);
-                FeedAdapter adapter = new FeedAdapter(feed, getBaseContext());
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                FeedWrapper feed = new Gson().fromJson(s, FeedWrapper.class); // create object model
+                FeedAdapter adapter = new FeedAdapter(feed, getBaseContext()); // create adapter
+                recyclerView.setAdapter(adapter); // set adapter
+                adapter.notifyDataSetChanged(); // inform adapter that it should updatee
             }
         };
 
-        String rssUrl = getRssUrl();
-        loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl));
+        String rssUrl = getRssUrl(); // get url from preferences or default
+        loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl)); // start execution of async task
     }
 
     /**
