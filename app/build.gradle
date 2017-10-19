@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+// Min SDK 19 allows me to use JDK 7 features like try-with-resources and doesn't limit userbase too much
+// https://developer.android.com/about/versions/android-4.4.html
+// https://developer.android.com/about/dashboards/index.html
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -18,6 +22,12 @@ android {
         }
     }
 }
+
+// guava is commented out and not used due to DEX 64K limit
+// it would most probably be ok to use guava and configure ProGuard to remove unnecessary classes, 
+// but here I have decided to not use Guava altogether
+//
+// More info: https://developer.android.com/studio/build/multidex.html
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
