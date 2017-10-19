@@ -6,6 +6,9 @@ import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+* Show and edit settings
+*/
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -20,6 +23,9 @@ public class SettingsActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    /**
+    * Fragment to show preferences editor
+    */
     public static class PrefsFragment extends PreferenceFragment {
 
         @Override
