@@ -5,9 +5,13 @@ converts them to json using web api and allows browsing thru simple list
 
 # Background
 
-Implementation has been created as part of Coursera Android Proramming moocs Capstone Project
+Implementation has been created as part of Coursera Android Proramming moocs Capstone Project. Protocol used is https.
 
+Example of calling background service
+
+```
 https://www.coursera.org/learn/aadcapstone/home/welcome
+```
 
 # Documentation
 
@@ -43,6 +47,12 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 ```
 
 As I've wanted to test technical abilities more than implement novel solutions I've decided to implement stripped down RSS reader as suggested.
+
+# External services
+
+ [rss2json] is api is used to retrieve and convert rss feeds to json
+
+ https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss
 
 # Architecture 
 
