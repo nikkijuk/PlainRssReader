@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +24,11 @@ import com.google.gson.Gson;
 import com.jukkanikki.plainrssreader.adapters.FeedAdapter;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
+import com.jukkanikki.plainrssreader.services.RssService;
 
 public class FeedActivity extends AppCompatActivity {
+
+    private static final String TAG = "FeedActivity";
 
     // Key for preferences reading
     private static final String KEY_PREF_SOURCE = "rss_source";
@@ -112,6 +116,10 @@ public class FeedActivity extends AppCompatActivity {
 
         String rssUrl = getRssUrl(); // get url from preferences or default
         loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl)); // start execution of async task
+
+        // Todo: call backgroud service to read feed
+        //callRssService(rssUrl);
+
     }
 
     /**
@@ -122,6 +130,18 @@ public class FeedActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         return sharedPref.getString(KEY_PREF_SOURCE, DEFAULT_RSS_URL);
     }
+
+    /**
+     * Creates a new Intent to start the RssService. Passes a URI in the Intent's "data" field.
+     */
+    private void callRssService(String url) {
+        Intent intent = new Intent(this, RssService.class);
+        intent.setData(Uri.parse(url)); // set url to data
+        startService(intent); // Starts the IntentService
+        Log.d(TAG,"Called rss service");
+    }
+
+
 
     /**
      * Opens settings activity
