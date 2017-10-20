@@ -31,7 +31,20 @@
 
         <service
             android:name=".services.RssService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <!--
+        Because android:exported is set to "false",
+        the receiver is only available to this app.
+
+        Note: manifest entry might not be needed for local receivers anyway
+        -->
+
+        <receiver
+            android:name=".events.ContentReadyReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

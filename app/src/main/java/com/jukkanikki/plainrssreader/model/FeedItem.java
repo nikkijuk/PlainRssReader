@@ -23,7 +23,7 @@ public class FeedItem {
     public String content;
     public Object enclosure;
     
-    @Ignore
+    //@Ignore
     public List<String> categories;
 
     public FeedItem(String title, String pubDate, String link, String guid, String author, String thumbnail, String description, String content, Object enclosure, List<String> categories) {

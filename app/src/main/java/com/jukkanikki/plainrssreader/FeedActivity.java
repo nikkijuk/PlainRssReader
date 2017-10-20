@@ -3,6 +3,7 @@ package com.jukkanikki.plainrssreader;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +24,8 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 import com.jukkanikki.plainrssreader.adapters.FeedAdapter;
+import com.jukkanikki.plainrssreader.events.ContentReadyReceiver;
+import com.jukkanikki.plainrssreader.events.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.services.RssService;
@@ -58,6 +62,17 @@ public class FeedActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        // The filter's action is BROADCAST_ACTION
+        IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
+
+        // Instantiates a new receiver
+        ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
+
+        // Registers the receiver and its intent filters
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                contentReadyReceiver,
+                contentReadyIntentFilter);
     }
 
     /**
@@ -118,7 +133,7 @@ public class FeedActivity extends AppCompatActivity {
         loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl)); // start execution of async task
 
         // Todo: call backgroud service to read feed
-        //callRssService(rssUrl);
+        callRssService(rssUrl);
 
     }
 

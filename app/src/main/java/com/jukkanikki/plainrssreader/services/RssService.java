@@ -3,7 +3,10 @@ package com.jukkanikki.plainrssreader.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import com.jukkanikki.plainrssreader.events.Events;
 
 // TODO: Async logic and persistence of articles
 // impement service which
@@ -30,9 +33,21 @@ public class RssService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String urlString = intent.getDataString();  // Gets url from the incoming Intent
+        Log.d(TAG,"Background processing started for url:"+urlString);
 
-        Log.d(TAG,"url is :"+urlString);
+        contentReady();
 
+        Log.d(TAG,"Background processing finished for url:"+urlString);
+
+    }
+
+    private void contentReady() {
+        Intent localIntent = new Intent(Events.CONTENT_READY_ACTION); // intent to send locally
+
+        // Broadcasts the Intent to receivers in this app.
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+
+        Log.d(TAG,"local intent sent");
     }
 
 }
