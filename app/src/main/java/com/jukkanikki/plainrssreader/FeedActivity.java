@@ -63,16 +63,7 @@ public class FeedActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        // The filter's action is BROADCAST_ACTION
-        IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
-
-        // Instantiates a new receiver
-        ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
-
-        // Registers the receiver and its intent filters
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                contentReadyReceiver,
-                contentReadyIntentFilter);
+        registerContentReadyReceiver();
     }
 
     /**
@@ -106,6 +97,15 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     /**
+     * Opens settings activity
+     * @param view button which onClick handler this method is
+     */
+    public void openSettings(View view) {
+        Intent settingsIntent = new Intent(this,SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+
+    /**
      * Load rss feed content asynchronously
      */
     private void loadRSS() {
@@ -133,8 +133,9 @@ public class FeedActivity extends AppCompatActivity {
         loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl)); // start execution of async task
 
         // Todo: call backgroud service to read feed
+        // Note: this method is left uncommented, so that it is possibly to
+        // follow flow of operations
         callRssService(rssUrl);
-
     }
 
     /**
@@ -147,6 +148,22 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     /**
+     * Register local receiver for content ready broadcasts
+     */
+    private void registerContentReadyReceiver() {
+        // The filter's action is BROADCAST_ACTION
+        IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
+
+        // Instantiates a new receiver
+        ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
+
+        // Registers the receiver and its intent filters
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                contentReadyReceiver,
+                contentReadyIntentFilter);
+    }
+
+    /**
      * Creates a new Intent to start the RssService. Passes a URI in the Intent's "data" field.
      */
     private void callRssService(String url) {
@@ -156,14 +173,4 @@ public class FeedActivity extends AppCompatActivity {
         Log.d(TAG,"Called rss service");
     }
 
-
-
-    /**
-     * Opens settings activity
-     * @param view button which onClick handler this method is
-     */
-    public void openSettings(View view) {
-        Intent settingsIntent = new Intent(this,SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
 }
