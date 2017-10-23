@@ -16,7 +16,7 @@
             app:titleTextColor="@android:color/white"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/articleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -27,7 +27,7 @@
             android:id="@+id/btnSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/recyclerView"
+            android:layout_above="@+id/articleView"
             android:layout_alignParentStart="true"
             android:onClick="openSettings"
             android:text="@string/button_settings" />

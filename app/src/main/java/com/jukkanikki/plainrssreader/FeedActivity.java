@@ -1,7 +1,5 @@
 package com.jukkanikki.plainrssreader;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -10,8 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +39,14 @@ public class FeedActivity extends AppCompatActivity {
     // Default feed used
     private final static String DEFAULT_RSS_URL ="http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
 
-    private RecyclerView recyclerView;
+    // view to show feeds
+    private RecyclerView articleView;
+
+    // Instantiates a new receiver
+    ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
+
+    // The filter's action is BROADCAST_ACTION
+    IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
 
     /**
     * Called when activity is created
@@ -59,11 +62,10 @@ public class FeedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // find view and set layout
-        recyclerView = findViewById(R.id.recyclerView);
+        articleView = findViewById(R.id.articleView);
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        articleView.setLayoutManager(linearLayoutManager);
 
-        registerContentReadyReceiver();
     }
 
     /**
@@ -72,10 +74,24 @@ public class FeedActivity extends AppCompatActivity {
     @Override
     protected void onResume () {
         super.onResume();
-        loadRSS(); 
+        registerContentReadyReceiver(); // listen content ready events
+
+        // when feed is loaded at onResume
+        // list is refreshed always when activity comes visible
+        loadRSS();
     }
 
-        @Override
+    /**
+     * Called when activity stops
+     */
+    @Override
+    protected void onPause () {
+        super.onPause();
+        unRegisterContentReadyReceiver(); // stop listening content ready events
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_feed, menu);
@@ -124,7 +140,7 @@ public class FeedActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 FeedWrapper feed = new Gson().fromJson(s, FeedWrapper.class); // create object model
                 FeedAdapter adapter = new FeedAdapter(feed, getBaseContext()); // create adapter
-                recyclerView.setAdapter(adapter); // set adapter
+                articleView.setAdapter(adapter); // set adapter
                 adapter.notifyDataSetChanged(); // inform adapter that it should updatee
             }
         };
@@ -151,17 +167,22 @@ public class FeedActivity extends AppCompatActivity {
      * Register local receiver for content ready broadcasts
      */
     private void registerContentReadyReceiver() {
-        // The filter's action is BROADCAST_ACTION
-        IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
-
-        // Instantiates a new receiver
-        ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
-
-        // Registers the receiver and its intent filters
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                contentReadyReceiver,
-                contentReadyIntentFilter);
+            // Registers the receiver and its intent filters
+            LocalBroadcastManager.getInstance(this).registerReceiver(
+                    contentReadyReceiver,
+                    contentReadyIntentFilter);
+        Log.d(TAG,"Registered content ready receiver");
     }
+
+    /**
+     * UnRegister local receiver for content ready broadcasts
+     */
+    private void unRegisterContentReadyReceiver() {
+        // UnRegisters the receiver
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(contentReadyReceiver);
+        Log.d(TAG,"Unregistered content ready receiver");
+    }
+
 
     /**
      * Creates a new Intent to start the RssService. Passes a URI in the Intent's "data" field.
