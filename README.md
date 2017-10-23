@@ -333,6 +333,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 
 [Lombok issue]: https://github.com/googlesamples/android-architecture-components/issues/120 "Lombok Room integration blocker"
 
+[Configuration chages]: https://developer.android.com/guide/topics/resources/runtime-changes.html "When activity is killed and recreated"
+
 [Next Billion Users]: https://www.youtube.com/watch?v=70WqJxymPr8&list=PL5G-TQp5op5qVE2mKqFlBnvbwsWFEwkFs&index=8 "Online / Offline problem"
 
 [UML component diagram of app]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader-components.png "Apps components"
