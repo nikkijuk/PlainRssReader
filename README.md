@@ -1,41 +1,38 @@
 # PlainRssReader
 
-PlainRssReader is very very simple implementation which reads rss files, 
+PlainRssReader is very very simple app which reads rss files, 
 converts them to json using web api and allows browsing thru simple list
 
 # Background
 
-Implementation has been created as part of Coursera Android Proramming moocs Capstone Project. 
-
-More info
-```
-https://www.coursera.org/learn/aadcapstone/home/welcome
-```
+App has been created as part of [Coursera Android Programming Capstone] Project. 
 
 # Documentation
 
-I have prepared README.md to explain application at a high level. Readme contains references to further architecture, design and implementation artifacts like mockups, uml diagrams, screenshots, etc.
+README.md contains architecture, design and implementation artifacts like mockups, uml diagrams, screenshots, etc. Code comments document low level decisions and mechanisms.
 
 # Repository
 
-Instead of having private GitLab repository as Mooc suggested I've decided to go with publig github account to share my experience with larger community.
+Instead of having private GitLab repository I've decided to go with public Github account to share my experience with larger community.
 
 Repositorys docs directory contains resources which accompany this documentation, otherwise repository contains solely application artifacts.
 
-# Requirements 
+# Architectural requirements 
 
-Requirements for projects are 
+Requirements for apps architecture and structure are 
 
 ```
 - Interact with at least one remotely-hosted web service over the network via HTTP.
 - Allow users to navigate between at least two different user interface screens at runtime.
 ```
 
-Example given was 
+# User facing functionality
 
-a hypothetical RSS/Atom reader app might have multiple screens, such as
+Requirements for apps user interface are 
 
 ```
+a hypothetical RSS/Atom reader app might have multiple screens, such as
+
 * a ListView showing all RSS Feed Stories,
 * a detail View showing a single Feed Story, and
 * a Settings view for configuring information about the App’s settings.
@@ -45,11 +42,13 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 * Have well documented source code and a short video that shows how your app works when it's run.
 ```
 
-As I've wanted to test technical abilities more than implement novel solutions I've decided to implement stripped down RSS reader as suggested.
+To study technical abilities of Android more than implement novel solution I've decided to implement stripped down RSS reader as suggested.
 
 # External services
 
- [rss2json] is api is used to retrieve and convert rss feeds to json. Protocol used is https.
+I've decided to go with http protocol with json payload. For this reason I'll convert Rss XML using external service.
+
+XML to Json conversion is done using [rss2json] service. [Gson] is used to marshall returned JSON to Plain Java Pojos.
 
 Example url of background service. rss_url query parameter defines source of rss feed.
 
@@ -57,15 +56,13 @@ Example url of background service. rss_url query parameter defines source of rss
  https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss
 ```
  
-# Architecture 
+# Software Architecture 
 
 "[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler.
 
 Development is done using [Android Studio], which is currently at 3.0 RC1. RC is used 'cos it has [Java 8 support] and lambdas are pretty nice.
 
-I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16] or [API-level 19]. Java 8 Streams are not used, since they doesn't exist before API-level 24. [Android devices] with API-level 24 are still not commonly in used.
-
-XML to Json conversion is done using [rss2json] service. [Gson] is used to marshall returned JSON to Plain Java Pojos.
+I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16] or [API-level 19]. Java 8 Streams are not used, since they doesn't exist before [API-level 24]. [Android devices] with API-level 24 are still not commonly in use, but 19 is safe choice for most users.
 
 I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence. 
 
@@ -74,7 +71,9 @@ I'm considering to use
 - [Retrofit]
 - [Android annotations]
 
-But it will be of highest priority to keep code working, not to polish it with unnecessary features and add code and libraries without real benefits. For this reason Guava is not yet in use, even if I see it as useful tool.
+But it will be of highest priority to keep code working, not to polish it with unnecessary features and add code and libraries without real benefits. For this reason [Guava] is not yet in use, even if I see it as useful tool.
+
+I try to keep in mind that [64K DEX limit] can possibly make my life hard as I'm not willing to invest in learning bytecode optimization tricks with [ProGuard] in this phase of development.
 
 # Architecture diagrams
 
@@ -123,7 +122,7 @@ Use [PlantUml testbench] if you want to experiment with given source.
 
 "there's no way to design the software in advance. Instead, you must design your software based on its current needs, and evolve the software design as the requirements change. This process is called [evolutionary design]." - James Shore.
 
-It's tempting to think that there's a way to know all details in advance and one could start work once plan in finished. I have taken different stance. Design evolves as I have more information, knowledge or time, and implementation follows design immendiately. Some call this iterative software development.
+It's tempting to think that there's a way to know all details in advance and one could start work once plan in finished. I have taken different stance. Design evolves as I have more information, knowledge or time, and implementation follows design immendiately. Some call this iterative software development or emergent design in contrast to Big Front Up or Plan Driven Desing. Simply put: I try to defer decisions to last responsible moment, but still steer my work with current knowledge.
 
 # Design Discussion 
 
@@ -138,17 +137,29 @@ covered in the four previous Content MOOCs in the AAD Specialization:
 - ContentProvider.
 ```
 
-Content providers won't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". Implementing content provider would add complexity without any gains, so it's easier, faster and better to use Sql-Lite directly or using [Room].
+## Implementation of Content provider
 
-Needless to say, that same applies to BroadcastReveiver and Service components, if there's no real need to use them. 
+Content providers won't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". 
 
-BroadcastReceivers could be possibly used to listen network state, so that calls external services would be only allowed when network is present and status of network would be updated based on system notifications. This needs still to be investigated.
+Please also refer to documentation of [Content Provider], which says "Use content providers if you plan to share data. If you don’t plan to share data, you may still use them because they provide a nice abstraction, but you don’t have to."
+
+Implementing [Content provider] would add complexity without any gains, so it's easier, faster and better to use [SQLite] directly or using [Room].
+
+## Implementation of Services and Broadcast Receivers
+
+Needless to say, that pain vs. gain or complexity conciderations apply to BroadcastReveiver and Service components.
+
+BroadcastReceivers could be used to listen network state, so that calls external services would be only allowed when network is present and status of network would be updated based on system notifications. Need is not very clear, since network state can be checked before each call to http service.
 
 BroadcastReceivers are also able to process return values from IntentServices or other asynchronously working background operations, and thus it would be possible to use local broadcasts to application internal communication if this is needed.
 
-Services might not needed. App doesn't expose services to other applications, and thus there's no need to separater processes which could be used from external apps. Calling possibly unreliable http api's do not need services if simply async task does the trick and allows calling http endpoint outside of UI thread. 
+Services might not needed. App doesn't expose services to other applications, and thus there's no need to separater processes which could be used from external apps. Calling possibly unreliable http api's do not need services if simply async task does the trick and allows calling http endpoint outside of UI thread as current version of this app is doing. 
 
 It seems that services have some benefits over AsyncTasks, which are bound to UI, and are gone is Activity is killed as part of configuration change due to device orientation change. If AsyncTasks compromise reliability of app, it might mean that IntentService is needed for syncing rss feeds, and thus also local broadcasts to return results of sync.
+
+App contains sample flow which starts background operation inside IntentService and listens notifications sent by service using broadcast receiver.
+
+Motivation for buffering results for offline use can be seen at [Next Billion Users]
 
 # Use cases
 
@@ -196,6 +207,8 @@ Storing and changing settings is implemented using PreferefencesFragment as defi
 
 Due to limiations and interoperability issues with [Room] annotation processors [AutoValue] and [Lombok] aren't used to reduce boilerplate code of model classes, see [AutoValue issue] and [Room issue] for deeper discussion.
 
+Planned: In app asynchronous processing and communication is documented at [Background processing best practices].
+
 # Snapshots of current implementation
 
 List of items
@@ -222,16 +235,23 @@ No persistence implemented
 No junit tests for real functionality
 - Only single dummy test present
 
+Async backgroud processing
+- Not implemented except skeletons / logging
+
 # Known bugs
 
 User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there. 
 - This bug is pretty annoying, since after giving false URL one needs to manually clear setting of App to get it starting again.
+
+[Coursera Android Programming Capstone]: https://www.coursera.org/learn/aadcapstone/home/welcome "Coursera Android Capstone"
 
 [yEd]: https://www.yworks.com/products/yed "yEd diagramming software"
 
 [use recycler-view]: https://willowtreeapps.com/ideas/android-fundamentals-working-with-the-recyclerview-adapter-and-viewholder-pattern/ "how to use recycler view, adapter and holder"
 
 [use preferences]: http://www.cs.dartmouth.edu/~campbell/cs65/lecture12/lecture12.html "how to use preferences fragment"
+
+[Background processing best practices]: https://developer.android.com/training/best-background.html "Background processing"
 
 [Android studio]: https://developer.android.com/studio/preview/index.html "Android studio 3.0 RC1"
 
@@ -240,6 +260,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [API-level 16]: https://developer.android.com/about/versions/android-4.1.html "Android 4.1 / Api-level 16"
 
 [API-level 19]: https://developer.android.com/about/versions/android-4.4.html "Android 4.4 / Api-level 19"
+
+[API-level 24]: https://developer.android.com/about/versions/nougat/android-7.0.html "Android 7.0 / Api-level 24"
 
 [Android devices]: https://developer.android.com/about/dashboards/index.html "Android devices in use"
 
@@ -271,7 +293,17 @@ User given url is not checked, and when trying to use wrong url during startup a
 
 [Android annotations]: http://androidannotations.org/ "annotation processor and code generator for boilerplate code"
 
+[Guava]: https://github.com/google/guava "Google guava is handy toolbox"
+
+[64K DEX limit]: https://developer.android.com/studio/build/multidex.html "Method table limit on Dalvik Executables"
+
+[ProGuard]: https://www.guardsquare.com/en/proguard "Bytecode optimization and obfuscation tools"
+
+[Content provider]: https://developer.android.com/guide/topics/providers/content-providers.html "Content provider documentation"
+
 [Sample content provider]: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceContentProviderSample/app/src/main/java/com/example/android/contentprovidersample/provider/SampleContentProvider.java "Sample content provider"
+
+[SQLite]: https://www.sqlite.org/ "Low footprint embedded database"
 
 [GSON]: https://github.com/google/gson "Googles serialization library"
 
@@ -282,6 +314,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Lombok]: https://projectlombok.org/features/Data "Lombok data annotation"
 
 [Lombok issue]: https://github.com/googlesamples/android-architecture-components/issues/120 "Lombok Room integration blocker"
+
+[Next Billion Users]: https://www.youtube.com/watch?v=70WqJxymPr8&list=PL5G-TQp5op5qVE2mKqFlBnvbwsWFEwkFs&index=8 "Online / Offline problem"
 
 [UML component diagram of app]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader-components.png "Apps components"
 
