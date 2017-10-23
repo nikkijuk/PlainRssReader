@@ -209,6 +209,16 @@ Due to limiations and interoperability issues with [Room] annotation processors 
 
 Planned: In app asynchronous processing and communication is documented at [Background processing best practices].
 
+## calling http endpoints
+
+It's possible to use [HttpUrlConnection] for getting json data. As implementation will be eventually hard to read it's better to look for stable library instead.
+
+As API is actually just normal get, which has nothing to do with Reas, using [Retrofit] seems overkill.
+
+To allow calling using simple api [okHttp] seems to be optimal. It doesn't hide IO errors, but simplifies creating connection, closing connection, parsing response body, etc. See [okHttp documentation] for more.
+
+Note that [OkHttp] uses [okIo] to optimize usage of javas IO system, which should lead to higher performance and reliability.
+
 # Snapshots of current implementation
 
 List of items
@@ -288,6 +298,14 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
 
 [Dagger]: https://google.github.io/dagger/ "dependency injection done with generated classes"
+
+[HttpUrlConnection]: https://stackoverflow.com/questions/8654876/http-get-using-android-httpurlconnection "low level http usage"
+
+[okHttp documentation]: http://square.github.io/okhttp/ "documentation of okHttp"
+
+[okHttp]: https://github.com/square/okhttp "simple api for http operations"
+
+[okIo]: https://github.com/square/okio "extension of java io libraries"
 
 [Retrofit]: http://square.github.io/retrofit/ "simplify http api's"
 
