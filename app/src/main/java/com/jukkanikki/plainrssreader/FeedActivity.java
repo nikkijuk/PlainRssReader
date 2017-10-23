@@ -78,7 +78,12 @@ public class FeedActivity extends AppCompatActivity {
 
         // when feed is loaded at onResume
         // list is refreshed always when activity comes visible
-        loadRSS();
+
+        // call backgroud service to read feed
+
+        loadRssUsingAsyncTask(); // NOTE: async task
+
+        loadRssUsingIntentService(); // NOTE: intent service + broadcast receiver
     }
 
     /**
@@ -124,7 +129,7 @@ public class FeedActivity extends AppCompatActivity {
     /**
      * Load rss feed content asynchronously
      */
-    private void loadRSS() {
+    private void loadRssUsingAsyncTask() {
         AsyncTask<String, String, String> loadRSSAsync = new AsyncTask<String, String, String>() {
 
             @Override
@@ -145,11 +150,6 @@ public class FeedActivity extends AppCompatActivity {
 
         String rssUrl = getRssUrl(); // get url from preferences or default
         loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl)); // start execution of async task
-
-        // Todo: call backgroud service to read feed
-        // Note: this method is left uncommented, so that it is possibly to
-        // follow flow of operations
-        callRssService(rssUrl);
     }
 
     /**
@@ -208,9 +208,10 @@ public class FeedActivity extends AppCompatActivity {
     /**
      * Creates a new Intent to start the RssService. Passes a URI in the Intent's "data" field.
      */
-    private void callRssService(String url) {
+    private void loadRssUsingIntentService() {
+        String rssUrl = getRssUrl(); // get url from preferences or default
         Intent intent = new Intent(this, RssService.class);
-        intent.setData(Uri.parse(url)); // set url to data
+        intent.setData(Uri.parse(rssUrl)); // set url to data
         startService(intent); // Starts the IntentService
         Log.d(TAG,"Called rss service");
     }
