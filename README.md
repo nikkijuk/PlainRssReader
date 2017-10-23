@@ -137,27 +137,31 @@ covered in the four previous Content MOOCs in the AAD Specialization:
 - ContentProvider.
 ```
 
-## Implementation of Content provider
+## Role of Content provider
 
 Content providers won't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". 
 
-Please also refer to documentation of [Content Provider], which says "Use content providers if you plan to share data. If you don’t plan to share data, you may still use them because they provide a nice abstraction, but you don’t have to."
+Please also refer to official documentation of [Content Provider], which says "Use content providers if you plan to share data. If you don’t plan to share data, you may still use them because they provide a nice abstraction, but you don’t have to."
 
 Implementing [Content provider] would add complexity without any gains, so it's easier, faster and better to use [SQLite] directly or using [Room].
 
-## Implementation of Services and Broadcast Receivers
+## Role of Services and Broadcast Receivers
 
-Needless to say, that pain vs. gain or complexity conciderations apply to BroadcastReveiver and Service components.
+Needless to say, that pain vs. gain or complexity conciderations apply to BroadcastReceiver and Service components also.
 
 BroadcastReceivers could be used to listen network state, so that calls external services would be only allowed when network is present and status of network would be updated based on system notifications. Need is not very clear, since network state can be checked before each call to http service.
 
 BroadcastReceivers are also able to process return values from IntentServices or other asynchronously working background operations, and thus it would be possible to use local broadcasts to application internal communication if this is needed.
 
-Services might not needed. App doesn't expose services to other applications, and thus there's no need to separater processes which could be used from external apps. Calling possibly unreliable http api's do not need services if simply async task does the trick and allows calling http endpoint outside of UI thread as current version of this app is doing. 
+Reader doesn't expose services to other applications, and thus there's no need for separate processes, which could be used from external apps. Calling possibly unreliable http api's do not need services if simply async task does the trick and allows calling http endpoint outside of UI thread as current version of Reader is doing. 
 
 It seems that services have some benefits over AsyncTasks, which are bound to UI, and are gone is Activity is killed as part of configuration change due to device orientation change. If AsyncTasks compromise reliability of app, it might mean that IntentService is needed for syncing rss feeds, and thus also local broadcasts to return results of sync.
 
-App contains sample flow which starts background operation inside IntentService and listens notifications sent by service using broadcast receiver.
+There's pro's and cons on using simple IntentService or AsyncTasks, but are experiences of others like [IntentService-vs-AsyncTask 1], [IntentService-vs-AsyncTask 1] or [AsyncTask problems] really relevant? And recommendations? Use this, use that, use [Loaders]? Or use [Volley]?
+
+App contains sample flow which starts background operation inside IntentService and listens notifications sent by service using broadcast receiver. Why these components are selected instead of [Volley]? Because in this course they are required.
+
+## Why implementing offline browsing of articles
 
 Motivation for buffering results for offline use can be seen at [Next Billion Users]
 
@@ -218,6 +222,8 @@ As API is actually just normal get, which has nothing to do with Reas, using [Re
 To allow calling using simple api [okHttp] seems to be optimal. It doesn't hide IO errors, but simplifies creating connection, closing connection, parsing response body, etc. See [okHttp documentation] for more.
 
 Note that [OkHttp] uses [okIo] to optimize usage of javas IO system, which should lead to higher performance and reliability.
+
+There's at least one more way of calling http service and working on results. Consider operations as queue and use [Volley] like in this example of [Http get with Volley]. Listeners are run on queued operations result, either successful or error, and refresh ui directly.
 
 # Snapshots of current implementation
 
@@ -309,6 +315,10 @@ User given url is not checked, and when trying to use wrong url during startup a
 
 [Retrofit]: http://square.github.io/retrofit/ "simplify http api's"
 
+[Volley]: https://developer.android.com/training/volley/index.html "operations as queue"
+
+[Http get with Volley]: https://developer.android.com/training/volley/simple.html
+
 [Android annotations]: http://androidannotations.org/ "annotation processor and code generator for boilerplate code"
 
 [Guava]: https://github.com/google/guava "Google guava is handy toolbox"
@@ -334,6 +344,14 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Lombok issue]: https://github.com/googlesamples/android-architecture-components/issues/120 "Lombok Room integration blocker"
 
 [Configuration chages]: https://developer.android.com/guide/topics/resources/runtime-changes.html "When activity is killed and recreated"
+
+[IntentService-vs-AsyncTask 1]: https://android.jlelse.eu/using-intentservice-vs-asynctask-in-android-2fec1b853ff4 "how to run background processes"
+
+[IntentService-vs-AsyncTask 2]: https://medium.com/@skidanolegs/asynctask-vs-intentservice-1-example-without-code-5250bea6bdae "how to run background processes"
+
+[AsyncTask problems]: http://bon-app-etit.blogspot.de/2013/04/the-dark-side-of-asynctask.html
+
+[Loaders]: https://developer.android.com/guide/components/loaders.html
 
 [Next Billion Users]: https://www.youtube.com/watch?v=70WqJxymPr8&list=PL5G-TQp5op5qVE2mKqFlBnvbwsWFEwkFs&index=8 "Online / Offline problem"
 
