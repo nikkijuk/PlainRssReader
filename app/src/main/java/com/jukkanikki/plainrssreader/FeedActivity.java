@@ -211,7 +211,7 @@ public class FeedActivity extends AppCompatActivity {
     private void loadRssUsingIntentService() {
         String rssUrl = getRssUrl(); // get url from preferences or default
         Intent intent = new Intent(this, RssService.class);
-        intent.setData(Uri.parse(rssUrl)); // set url to data
+        intent.setData(Uri.parse(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl))); // set url to data
         startService(intent); // Starts the IntentService
         Log.d(TAG,"Called rss service");
     }
