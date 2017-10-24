@@ -4,7 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
+import com.jukkanikki.plainrssreader.ArticlesUtil;
+import com.jukkanikki.plainrssreader.model.FeedWrapper;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,6 +26,16 @@ public class ContentReadyReceiver extends BroadcastReceiver {
 
     private static final String TAG = "ContentReadyReceiver";
 
+    private RecyclerView articleView;
+
+    /**
+     * Inject article view
+     * @param articleView article view
+     */
+    public void setArticleView(RecyclerView articleView) {
+        this.articleView = articleView;
+    }
+
     /**
      * This method is called when the BroadcastReceiver is receiving
      */
@@ -35,8 +49,11 @@ public class ContentReadyReceiver extends BroadcastReceiver {
         Log.d(TAG,"Content ready :"+uri.toString());
 
         String data = readArticlesFile(uri); //Get the text file
-        Log.d(TAG,"read data from temp :"+data.substring(1,100));
+        Log.d(TAG,"read data from temp :"+data.substring(0,100));
 
+        // Fill list of articles
+        FeedWrapper feed = ArticlesUtil.convertToObjects(data);
+        ArticlesUtil.bindView(context ,articleView, feed);
     }
 
     /**
@@ -54,7 +71,6 @@ public class ContentReadyReceiver extends BroadcastReceiver {
 
             while ((line = br.readLine()) != null) {
                 text.append(line);
-                text.append('\n');
             }
             br.close();
 

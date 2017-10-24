@@ -66,6 +66,8 @@ public class FeedActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         articleView.setLayoutManager(linearLayoutManager);
 
+        contentReadyReceiver.setArticleView(articleView);
+
     }
 
     /**
@@ -81,7 +83,7 @@ public class FeedActivity extends AppCompatActivity {
 
         // call backgroud service to read feed
 
-        loadRssUsingAsyncTask(); // NOTE: async task
+        //loadRssUsingAsyncTask(); // NOTE: async task
 
         loadRssUsingIntentService(); // NOTE: intent service + broadcast receiver
     }
@@ -157,22 +159,8 @@ public class FeedActivity extends AppCompatActivity {
      * @param json json content
      */
     private void fillArticlesView(String json) {
-        FeedWrapper feed = convertToObjects(json);     // currently displayed feed
-
-        // TODO: creating new adapter after each update of values might not be right thing to do ..
-
-        FeedAdapter adapter = new FeedAdapter(feed, getBaseContext()); // create adapter
-        articleView.setAdapter(adapter); // set adapter
-        adapter.notifyDataSetChanged(); // inform adapter that it should update
-    }
-
-    /**
-     * Convert json to pojos using gson
-     * @param json json
-     * @return FeedWrapper as root of object graph
-     */
-    private FeedWrapper convertToObjects(String json) {
-        return new Gson().fromJson(json, FeedWrapper.class); // json -> pojos
+        FeedWrapper feed = ArticlesUtil.convertToObjects(json);     // currently displayed feed
+        ArticlesUtil.bindView(getBaseContext(),articleView, feed);
     }
 
     /**
