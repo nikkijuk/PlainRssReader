@@ -67,6 +67,8 @@ public class RssService extends IntentService {
     /**
      * Writes content to temp file
      *
+     * file is written to temp files of android, it's not exposed to outsiders
+     *
      * @param url url of content
      * @param content payload
      * @return file handle
@@ -77,6 +79,8 @@ public class RssService extends IntentService {
         // TODO: use try-with-resources
         try {
             String fileName = Uri.parse(url).getLastPathSegment();
+
+            // create temp file used to keep file hidden from other apps
             file = File.createTempFile(fileName, null, getBaseContext().getCacheDir());
 
             FileOutputStream fOut = new FileOutputStream(file);
