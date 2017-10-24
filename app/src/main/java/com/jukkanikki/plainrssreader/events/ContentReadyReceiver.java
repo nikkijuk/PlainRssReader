@@ -14,12 +14,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.net.URI;
 
-// TODO: Implement receiver
-// receiver should force refresh of content:
-//   reading data from persistent store,
-//   filling / creating recycler view adapter and
-//   notifying view recycler view that content should be repainted
-
+/**
+ * React when feeds needs to be rendered
+ *
+ * receiver should force refresh of content:
+ *    identifying feeds location
+ *    reading data from persistent store,
+ *    filling / creating recycler view adapter and
+ *    notifying view recycler view that content should be repainted
+ */
 public class ContentReadyReceiver extends BroadcastReceiver {
 
     private static final String TAG = "ContentReadyReceiver";
@@ -40,17 +43,17 @@ public class ContentReadyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        // ready to update article view
-        // TODO: add updating + reference to articles view
-
+        // ready to update article view from  ...
         String uri = intent.getStringExtra(Events.CONTENT_URL); // get uri from extras
-        Log.d(TAG,"Content ready :"+uri.toString());
+        Log.d(TAG,"Content ready at :"+uri.toString());
 
         String data = readArticlesFile(uri); //Get the text file
         Log.d(TAG,"read data from temp :"+data.substring(0,100));
 
         // Fill list of articles
         FeedWrapper feed = ArticlesUtil.convertToObjects(data);
+
+        // bind feed to acticle view
         ArticlesUtil.bindView(context ,articleView, feed);
     }
 
