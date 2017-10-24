@@ -188,10 +188,10 @@ public class FeedActivity extends AppCompatActivity {
      * Register local receiver for content ready broadcasts
      */
     private void registerContentReadyReceiver() {
-            // Registers the receiver and its intent filters
-            LocalBroadcastManager.getInstance(this).registerReceiver(
-                    contentReadyReceiver,
-                    contentReadyIntentFilter);
+        // Registers the receiver and its intent filters
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                contentReadyReceiver,
+                contentReadyIntentFilter);
         Log.d(TAG,"Registered content ready receiver");
     }
 
