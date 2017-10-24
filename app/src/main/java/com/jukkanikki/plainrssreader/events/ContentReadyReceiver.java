@@ -3,17 +3,15 @@ package com.jukkanikki.plainrssreader.events;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.jukkanikki.plainrssreader.ArticlesUtil;
+import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URI;
 
 // TODO: Implement receiver
@@ -45,7 +43,7 @@ public class ContentReadyReceiver extends BroadcastReceiver {
         // ready to update article view
         // TODO: add updating + reference to articles view
 
-        String uri = intent.getStringExtra("URL"); // get uri from extras
+        String uri = intent.getStringExtra(Events.CONTENT_URL); // get uri from extras
         Log.d(TAG,"Content ready :"+uri.toString());
 
         String data = readArticlesFile(uri); //Get the text file

@@ -18,35 +18,23 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
-import com.jukkanikki.plainrssreader.adapters.FeedAdapter;
 import com.jukkanikki.plainrssreader.events.ContentReadyReceiver;
 import com.jukkanikki.plainrssreader.events.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.services.RssService;
+import com.jukkanikki.plainrssreader.util.ArticlesUtil;
+import com.jukkanikki.plainrssreader.util.PreferencesUtil;
 
 public class FeedActivity extends AppCompatActivity {
 
     private static final String TAG = "FeedActivity";
 
-    // Key for preferences reading
-    private static final String KEY_PREF_SOURCE = "rss_source";
-
-    // Xml to Json conversion api
-    private final static String RSS_TO_JSON_API_API = "https://api.rss2json.com/v1/api.json?rss_url=";
-    
-    // Default feed used
-    private final static String DEFAULT_RSS_URL ="http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
-
     // view to show feeds
     private RecyclerView articleView;
 
-    // Instantiates a new receiver
+    // receiver for content ready notifications
     ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
-
-    // The filter's action is BROADCAST_ACTION
-    IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
 
     /**
     * Called when activity is created
@@ -66,20 +54,19 @@ public class FeedActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         articleView.setLayoutManager(linearLayoutManager);
 
+        // define which view is updated when content is ready
         contentReadyReceiver.setArticleView(articleView);
-
     }
 
     /**
     * Called when activity comes visible
+    * As feed is loaded at onResume list of articles is refreshed always when activity comes visible
     */
     @Override
     protected void onResume () {
         super.onResume();
         registerContentReadyReceiver(); // listen content ready events
 
-        // when feed is loaded at onResume
-        // list is refreshed always when activity comes visible
 
         // call backgroud service to read feed
 
@@ -125,11 +112,15 @@ public class FeedActivity extends AppCompatActivity {
      */
     public void openSettings(View view) {
         Intent settingsIntent = new Intent(this,SettingsActivity.class);
-        startActivity(settingsIntent);
+        startActivity(settingsIntent); // opens settings activity
     }
 
     /**
      * Load rss feed content asynchronously
+     *
+     * this method is kinda ok, but as activity might just die without saying goodbye
+     * it might be that when async task is finished there's nothing that could be updated
+     * (original activity of which async task was part is gone)
      */
     private void loadRssUsingAsyncTask() {
         AsyncTask<String, String, String> loadRSSAsync = new AsyncTask<String, String, String>() {
@@ -146,12 +137,19 @@ public class FeedActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String s) {
+
+                // at that point activity might be already away if
+                // android has needed memory or configuration changes have happened
+
                 fillArticlesView(s); // set result to acticles view
             }
         };
 
-        String rssUrl = getRssUrl(); // get url from preferences or default
-        loadRSSAsync.execute(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl)); // start execution of async task
+        String rssUrl = PreferencesUtil.getRssUrl(this); // get url from preferences or default
+
+        // start execution of async task
+        // at that point activity exists always
+        loadRSSAsync.execute(rssUrl);
     }
 
     /**
@@ -160,26 +158,24 @@ public class FeedActivity extends AppCompatActivity {
      */
     private void fillArticlesView(String json) {
         FeedWrapper feed = ArticlesUtil.convertToObjects(json);     // currently displayed feed
-        ArticlesUtil.bindView(getBaseContext(),articleView, feed);
-    }
 
-    /**
-     * Reads url, and uses default if preferences is empty
-     */
-     @NonNull
-    private String getRssUrl() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        return sharedPref.getString(KEY_PREF_SOURCE, DEFAULT_RSS_URL);
+        // if activity has died also article view is away and base context can't be found either
+        ArticlesUtil.bindView(getBaseContext(),articleView, feed);
     }
 
     /**
      * Register local receiver for content ready broadcasts
      */
     private void registerContentReadyReceiver() {
+
+        // The filter's action is BROADCAST_ACTION
+        IntentFilter contentReadyIntentFilter = new IntentFilter(Events.CONTENT_READY_ACTION);
+
         // Registers the receiver and its intent filters
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 contentReadyReceiver,
                 contentReadyIntentFilter);
+
         Log.d(TAG,"Registered content ready receiver");
     }
 
@@ -189,6 +185,7 @@ public class FeedActivity extends AppCompatActivity {
     private void unRegisterContentReadyReceiver() {
         // UnRegisters the receiver
         LocalBroadcastManager.getInstance(this).unregisterReceiver(contentReadyReceiver);
+
         Log.d(TAG,"Unregistered content ready receiver");
     }
 
@@ -197,10 +194,14 @@ public class FeedActivity extends AppCompatActivity {
      * Creates a new Intent to start the RssService. Passes a URI in the Intent's "data" field.
      */
     private void loadRssUsingIntentService() {
-        String rssUrl = getRssUrl(); // get url from preferences or default
-        Intent intent = new Intent(this, RssService.class);
-        intent.setData(Uri.parse(String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl))); // set url to data
-        startService(intent); // Starts the IntentService
+        String rssUrl = PreferencesUtil.getRssUrl(this); // get url from preferences or default
+        Intent intent = new Intent(this, RssService.class); // define which service is to be started
+        intent.setData(Uri.parse(rssUrl)); // set url to data
+
+        // Starts the IntentService
+        // intent service is started service and doesn't have any kind of reference to activity calling it
+        startService(intent);
+
         Log.d(TAG,"Called rss service");
     }
 

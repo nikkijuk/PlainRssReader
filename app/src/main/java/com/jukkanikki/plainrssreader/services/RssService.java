@@ -45,7 +45,7 @@ public class RssService extends IntentService {
         Log.d(TAG,"Background processing started for url:"+urlString);
 
         String data = HttpReader.getData(urlString);
-        Log.d(TAG,"received data :"+data.substring(1,100));
+        Log.d(TAG,"received data :"+data.substring(0,100));
 
         contentReady(urlString, data);
 
@@ -54,10 +54,14 @@ public class RssService extends IntentService {
 
     private void contentReady(String url, String content) {
 
+        // TODO: write content to SQLite
+
+
+        // writes content to file
         File file = writeContentToFile(url, content);
 
+        // sends broadcast with files uri
         sendBroadcastWithFileUri(file);
-
     }
 
     /**
@@ -70,6 +74,7 @@ public class RssService extends IntentService {
     private File writeContentToFile(String url, String content) {
         File file = null;
 
+        // TODO: use try-with-resources
         try {
             String fileName = Uri.parse(url).getLastPathSegment();
             file = File.createTempFile(fileName, null, getBaseContext().getCacheDir());
@@ -102,12 +107,12 @@ public class RssService extends IntentService {
             Intent localIntent;//localIntent = new Intent(Events.CONTENT_READY_ACTION, Uri.parse(file.toURI().toString())); // intent to send locally
 
             localIntent = new Intent(Events.CONTENT_READY_ACTION);  // intent to send locally
-            localIntent.putExtra("URL", file.toURI().toString()); // pointer to file
+            localIntent.putExtra(Events.CONTENT_URL, file.toURI().toString()); // pointer to file
 
             // Broadcasts the Intent to receivers in this app.
             LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
 
-            Log.d(TAG, "local intent sent");
+            Log.d(TAG, "local intent sent with uri :"+file.toURI().toString());
         } else {
             Log.e(TAG, "File is null, can't send broadcast with URI");
         }
