@@ -159,7 +159,9 @@ It seems that services have some benefits over AsyncTasks, which are bound to UI
 
 There's pro's and cons on using simple IntentService or AsyncTasks, but are experiences of others like [IntentService-vs-AsyncTask 1], [IntentService-vs-AsyncTask 1] or [AsyncTask problems] really relevant? And recommendations? Use this, use that, use [Loaders]? Or use [Volley]?
 
-App contains sample flow which starts background operation inside IntentService and listens notifications sent by service using broadcast receiver. Why these components are selected instead of [Volley]? Because in this course they are required.
+App contains sample flow which starts background operation inside IntentService and listens notifications sent by service using broadcast receiver. 
+
+I might also implement simple flow using [Volley]. See [Volley tutorial] for more info.
 
 ## Why implementing offline browsing of articles
 
@@ -316,6 +318,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Retrofit]: http://square.github.io/retrofit/ "simplify http api's"
 
 [Volley]: https://developer.android.com/training/volley/index.html "operations as queue"
+
+[Volley tutorial]: https://www.sitepoint.com/volley-a-networking-library-for-android/
 
 [Http get with Volley]: https://developer.android.com/training/volley/simple.html
 
