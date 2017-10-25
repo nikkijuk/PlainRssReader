@@ -233,25 +233,25 @@ I have tried to persist results of feed reading in intent service to temporary f
 
 ## persisting articles to SQLite
 
-SQLite database is used as follows
+[SQLite] database is used as follows
 
 Intent Service 
 - reads feed from http endpoint as json
 - converts feed json to pojos
-- pojos are converted to article database objects and saved
+- pojos are converted to article database objects and saved to [SQLite]
 - content ready event is sent
 
 Broadcast Receiver
-- reads articles from db
+- reads articles from [SQLite]
 - creates new articles adapter for Recycler View
 
 Broadcast Receiver is here observer, and in charge of updating model. Intent service is representing observable entities. It would be possible to schedule Intent Service to poll http endpoint and notify Broadcast Receiver when there's new content.
 
-Intent Service / Broadcast Receiver design works, but has a lot of moving parts developer needs to get right - and might get wrong. Google Architecture Components are set of components and conventions which are worth to study to get glimpse of how this could be done easier. Notify especially [LiveData] as source of evemts - clever move towards reactive programming.
+Intent Service / Broadcast Receiver design works, but has a lot of moving parts developer needs to get right - and might get wrong. [Android Architecture Components] are set of components and conventions which are worth to study to get glimpse of how this could be done easier. Notify especially [LiveData] as source of evemts - clever move towards reactive programming.
 
-Room is used as ORM, it is pretty powerful, but usage is here really limited. 
+[Room] is used as ORM, it is pretty powerful, but usage is here really limited. [Room testing] explains how to test database operations.
 
-Read Room tutorial and Lifecycle aware components tutorial for more details.
+Read [Room tutorial] and work thru [Room codelab] and [Android lifecycles codelab] for more details.
 
 # Snapshots of current implementation
 
@@ -330,6 +330,16 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Android architecture components]: https://developer.android.com/topic/libraries/architecture/index.html "Android architecure components by Google"
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
+
+[Room tutorial]: http://www.vogella.com/tutorials/AndroidSQLite/article.html
+
+[Room codelab]: https://codelabs.developers.google.com/codelabs/android-persistence/
+
+[Room testing]: https://commonsware.com/AndroidArch/previews/testing-room
+
+[Android lifecycles codelab]: https://codelabs.developers.google.com/codelabs/android-lifecycles/
+
+[LiveData]: https://developer.android.com/topic/libraries/architecture/livedata.html
 
 [Dagger]: https://google.github.io/dagger/ "dependency injection done with generated classes"
 
