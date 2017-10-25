@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.jukkanikki.plainrssreader.events.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
+import com.jukkanikki.plainrssreader.util.FileUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,7 +63,7 @@ public class RssService extends IntentService {
     private void contentReadyUsingFile (String url, String content) {
 
         // writes content to file
-        File file = writeContentToFile(url, content);
+        File file = FileUtil.createTempFile(getBaseContext(), url, content);
 
         // sends broadcast with files uri
         sendBroadcastWithFileUri(file);
@@ -73,43 +74,6 @@ public class RssService extends IntentService {
         // TODO: write content to SQLite
     }
 
-
-    /**
-     * Writes content to temp file
-     *
-     * file is written to temp files of android, it's not exposed to outsiders
-     *
-     * @param url url of content
-     * @param content payload
-     * @return file handle
-     */
-    private File writeContentToFile(String url, String content) {
-        File file = null;
-
-        // TODO: use try-with-resources
-        try {
-            String fileName = Uri.parse(url).getLastPathSegment();
-
-            // create temp file used to keep file hidden from other apps
-            file = File.createTempFile(fileName, null, getBaseContext().getCacheDir());
-
-            FileOutputStream fOut = new FileOutputStream(file);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-            myOutWriter.append(content);
-
-            myOutWriter.close();
-
-            fOut.flush();
-            fOut.close();
-
-        } catch (IOException e) {
-            // Error while creating file
-            Log.e(TAG,"error saving result :"+e.getMessage());
-            e.printStackTrace();
-        }
-
-        return file;
-    }
 
     /**
      * Send notification that new article file is ready to be consumer
