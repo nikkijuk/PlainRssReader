@@ -2,12 +2,9 @@ package com.jukkanikki.plainrssreader;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +15,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.jukkanikki.plainrssreader.events.ContentReadyReceiver;
+import com.jukkanikki.plainrssreader.events.ContentDbReadyReceiver;
+import com.jukkanikki.plainrssreader.events.ContentFileReadyReceiver;
 import com.jukkanikki.plainrssreader.events.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
@@ -34,7 +32,12 @@ public class FeedActivity extends AppCompatActivity {
     private RecyclerView articleView;
 
     // receiver for content ready notifications
-    ContentReadyReceiver contentReadyReceiver = new ContentReadyReceiver();
+
+    // --> content from dbn
+    //ContentFileReadyReceiver contentReadyReceiver = new ContentFileReadyReceiver();
+
+    // --> content from db
+    ContentDbReadyReceiver contentReadyReceiver = new ContentDbReadyReceiver();
 
     /**
     * Called when activity is created
@@ -160,7 +163,7 @@ public class FeedActivity extends AppCompatActivity {
         FeedWrapper feed = ArticlesUtil.convertToObjects(json);     // currently displayed feed
 
         // if activity has died also article view is away and base context can't be found either
-        ArticlesUtil.bindView(getBaseContext(),articleView, feed);
+        ArticlesUtil.bindViewToFeed(getBaseContext(),articleView, feed);
     }
 
     /**

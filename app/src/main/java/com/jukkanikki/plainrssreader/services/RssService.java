@@ -1,12 +1,17 @@
 package com.jukkanikki.plainrssreader.services;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.jukkanikki.plainrssreader.db.AppDatabase;
 import com.jukkanikki.plainrssreader.events.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
+import com.jukkanikki.plainrssreader.model.FeedWrapper;
+import com.jukkanikki.plainrssreader.util.ArticlesUtil;
+import com.jukkanikki.plainrssreader.util.DbUtil;
 import com.jukkanikki.plainrssreader.util.FileUtil;
 
 import java.io.File;
@@ -38,34 +43,32 @@ public class RssService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String urlString = intent.getDataString();  // Gets url from the incoming Intent
+        Context context = getBaseContext();
+
+        // get db
+        AppDatabase db = AppDatabase.getInMemoryDatabase(context);
+
+        // gets url from the incoming Intent
+        String urlString = intent.getDataString();
         Log.d(TAG,"Background processing started for url:"+urlString);
 
-        String data = HttpReader.getData(urlString); // get data
+        // get data using http
+        String data = HttpReader.getData(urlString);
         Log.d(TAG,"received data :"+data.substring(0,100));
 
-        // send result to broadcast receiver
-        contentReadyUsingFile(urlString, data);
+        // save content to file identified with url
+        File file = FileUtil.createTempFile(context, urlString, data);
 
-        Log.d(TAG,"Background processing finished for url:"+urlString);
-    }
+        // marshal to feed
+        FeedWrapper feed = ArticlesUtil.convertToObjects(data);
 
-    /**
-     * save content to file identified with url and send url to broadcast receiver
-     *
-     * @param url
-     * @param content
-     */
-    private void contentReadyUsingFile (String url, String content) {
-
-        File file = FileUtil.createTempFile(getBaseContext(), url, content);
+        // write articles from feed to SQLite db using Room
+        DbUtil.populateDbFromFeed(db, feed);
 
         // sends broadcast with files uri
         sendBroadcastWithFileUri(file);
-    }
 
-    private void contentReadyUsingDB (String url, String content) {
-        // TODO: write content to SQLite
+        Log.d(TAG,"Background processing finished for url:"+urlString);
     }
 
     /**

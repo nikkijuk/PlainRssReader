@@ -19,9 +19,9 @@ import com.jukkanikki.plainrssreader.util.FileUtil;
  *    filling / creating recycler view adapter and
  *    notifying view recycler view that content should be repainted
  */
-public class ContentReadyReceiver extends BroadcastReceiver {
+public class ContentFileReadyReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "ContentReadyReceiver";
+    private static final String TAG = "ContentFileReadyReceiver";
 
     private RecyclerView articleView;
 
@@ -50,7 +50,7 @@ public class ContentReadyReceiver extends BroadcastReceiver {
         FeedWrapper feed = ArticlesUtil.convertToObjects(data);
 
         // bind feed to acticle view
-        ArticlesUtil.bindView(context ,articleView, feed);
+        ArticlesUtil.bindViewToFeed(context ,articleView, feed);
     }
 
 }

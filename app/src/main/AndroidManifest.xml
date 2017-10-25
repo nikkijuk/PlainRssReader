@@ -41,7 +41,7 @@
         -->
 
         <receiver
-            android:name=".events.ContentReadyReceiver"
+            android:name=".events.ContentFileReadyReceiver"
             android:enabled="true"
             android:exported="false"/>
 
