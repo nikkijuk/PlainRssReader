@@ -219,13 +219,39 @@ Planned: In app asynchronous processing and communication is documented at [Back
 
 It's possible to use [HttpUrlConnection] for getting json data. As implementation will be eventually hard to read it's better to look for stable library instead.
 
-As API is actually just normal get, which has nothing to do with Reas, using [Retrofit] seems overkill.
+As API is actually just normal get, which has nothing to do with Rest, using [Retrofit] seems overkill - so I won't try it even if it looks very handy.
 
 To allow calling using simple api [okHttp] seems to be optimal. It doesn't hide IO errors, but simplifies creating connection, closing connection, parsing response body, etc. See [okHttp documentation] for more.
 
 Note that [OkHttp] uses [okIo] to optimize usage of javas IO system, which should lead to higher performance and reliability.
 
 There's at least one more way of calling http service and working on results. Consider operations as queue and use [Volley] like in this example of [Http get with Volley]. Listeners are run on queued operations result, either successful or error, and refresh ui directly.
+
+## persisting feeds to temporaty file
+
+I have tried to persist results of feed reading in intent service to temporary file and then reading results at broadcast receiver. While this works feed is just big single CLOB which needs to be read to memory for parsing. Location of file needs to be sent from intent service to broadcast receiver using extras of intent.
+
+## persisting articles to SQLite
+
+SQLite database is used as follows
+
+Intent Service 
+- reads feed from http endpoint as json
+- converts feed json to pojos
+- pojos are converted to article database objects and saved
+- content ready event is sent
+
+Broadcast Receiver
+- reads articles from db
+- creates new articles adapter for Recycler View
+
+Broadcast Receiver is here observer, and in charge of updating model. Intent service is representing observable entities. It would be possible to schedule Intent Service to poll http endpoint and notify Broadcast Receiver when there's new content.
+
+Intent Service / Broadcast Receiver design works, but has a lot of moving parts developer needs to get right - and might get wrong. Google Architecture Components are set of components and conventions which are worth to study to get glimpse of how this could be done easier. Notify especially [LiveData] as source of evemts - clever move towards reactive programming.
+
+Room is used as ORM, it is pretty powerful, but usage is here really limited. 
+
+Read Room tutorial and Lifecycle aware components tutorial for more details.
 
 # Snapshots of current implementation
 
