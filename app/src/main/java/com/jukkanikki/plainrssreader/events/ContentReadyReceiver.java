@@ -40,10 +40,10 @@ public class ContentReadyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         // ready to update article view from  ...
-        String uri = intent.getStringExtra(Events.CONTENT_URL); // get uri from extras
-        Log.d(TAG,"Content ready at :"+uri.toString());
+        String fileUri = intent.getStringExtra(Events.CONTENT_READY_FILE_URI); // get fileUri from extras
+        Log.d(TAG,"Content ready at :"+fileUri);
 
-        String data = FileUtil.readFile(uri); //Get the text file
+        String data = FileUtil.readContentFromUri(fileUri); //Get the text file
         Log.d(TAG,"read data from temp :"+data.substring(0,100));
 
         // Fill list of articles

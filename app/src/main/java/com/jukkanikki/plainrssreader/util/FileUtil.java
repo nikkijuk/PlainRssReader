@@ -12,10 +12,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 
-/**
- * Created by jnikki on 10/25/17.
- */
-
 public class FileUtil {
 
     private static final String TAG = "FileUtil";
@@ -28,7 +24,7 @@ public class FileUtil {
      * @param uri location of file
      * @return content of file
      */
-    public static String readFile(String uri) {
+    public static String readContentFromUri(String uri) {
 
         // todo: refactor to try with resources
         try {

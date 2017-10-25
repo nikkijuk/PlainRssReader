@@ -2,7 +2,6 @@ package com.jukkanikki.plainrssreader.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -11,9 +10,6 @@ import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.util.FileUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 /**
  * Async logic and persistence of articles
@@ -62,7 +58,6 @@ public class RssService extends IntentService {
      */
     private void contentReadyUsingFile (String url, String content) {
 
-        // writes content to file
         File file = FileUtil.createTempFile(getBaseContext(), url, content);
 
         // sends broadcast with files uri
@@ -70,10 +65,8 @@ public class RssService extends IntentService {
     }
 
     private void contentReadyUsingDB (String url, String content) {
-
         // TODO: write content to SQLite
     }
-
 
     /**
      * Send notification that new article file is ready to be consumer
@@ -85,12 +78,14 @@ public class RssService extends IntentService {
             Intent localIntent;//localIntent = new Intent(Events.CONTENT_READY_ACTION, Uri.parse(file.toURI().toString())); // intent to send locally
 
             localIntent = new Intent(Events.CONTENT_READY_ACTION);  // intent to send locally
-            localIntent.putExtra(Events.CONTENT_URL, file.toURI().toString()); // pointer to file
+
+            String fileUri = file.toURI().toString();
+            localIntent.putExtra(Events.CONTENT_READY_FILE_URI, fileUri); // pointer to file
 
             // Broadcasts the Intent to receivers in this app.
             LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
 
-            Log.d(TAG, "local intent sent with uri :"+file.toURI().toString());
+            Log.d(TAG, "local intent sent with uri :"+ fileUri);
         } else {
             Log.e(TAG, "File is null, can't send broadcast with URI");
         }
