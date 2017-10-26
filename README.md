@@ -251,7 +251,7 @@ Intent Service / Broadcast Receiver design works, but has a lot of moving parts 
 
 [Room] is used as ORM, it is pretty powerful, but usage is here really limited. [Room testing] explains how to test database operations.
 
-Read [Room tutorial] and work thru [Room codelab] and [Android lifecycles codelab] for more details.
+Read [Room tutorial] and work thru [Room codelab] and [Android lifecycles codelab] for more details. When you have got this far you might be interested to read [LiveData patterns and antipatterns] and play with [Android arhitecture blueprints]. And don't miss [Android architecture guide].
 
 # Snapshots of current implementation
 
@@ -328,6 +328,12 @@ User given url is not checked, and when trying to use wrong url during startup a
 [SimpleUMLCe]: https://plugins.jetbrains.com/plugin/4946-simpleumlce "very simple uml diagramming tool"
 
 [Android architecture components]: https://developer.android.com/topic/libraries/architecture/index.html "Android architecure components by Google"
+
+[LiveData patterns and antipatterns]: https://medium.com/google-developers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54
+
+[Android arhitecture blueprints]: https://github.com/googlesamples/android-architecture
+
+[Android architecture guide]: https://developer.android.com/topic/libraries/architecture/guide.html
 
 [Room]: https://developer.android.com/topic/libraries/architecture/room.html "Room persistence library"
 
