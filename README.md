@@ -137,13 +137,24 @@ covered in the four previous Content MOOCs in the AAD Specialization:
 - ContentProvider.
 ```
 
+Without such rigid restrictions of techniques to use application could have looked like [LifecycleAwareRssReader].
+
 ## Role of Content provider
 
-Content providers won't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". 
+Content providers shouldn't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". 
 
 Please also refer to official documentation of [Content Provider], which says "Use content providers if you plan to share data. If you don’t plan to share data, you may still use them because they provide a nice abstraction, but you don’t have to."
 
 Implementing [Content provider] would add complexity without any gains, so it's easier, faster and better to use [SQLite] directly or using [Room].
+
+NOTE: THERE IS READ ONLY CONTENT PROVIDER IMPLEMENTED! This was necessary, as one needs to get full points and use all components to get further in capstone project. I feel this bit daunting, but so are rules ..
+
+```
+Try again
+You earned 25 points, but you need to earn at least 30 / 30 points to pass. Review your feedback below, improve your submission, and resubmit when you're ready. 
+```
+
+Please see here implementation of [ArticleContentProvider]
 
 ## Role of Services and Broadcast Receivers
 
@@ -365,6 +376,8 @@ User given url is not checked, and when trying to use wrong url during startup a
 [Content provider]: https://developer.android.com/guide/topics/providers/content-providers.html "Content provider documentation"
 
 [Sample content provider]: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceContentProviderSample/app/src/main/java/com/example/android/contentprovidersample/provider/SampleContentProvider.java "Sample content provider"
+
+[ArticleContentProvider]: https://github.com/nikkijuk/PlainRssReader/blob/master/app/src/main/java/com/jukkanikki/plainrssreader/contentprovider/ArticleContentProvider.java
 
 [SQLite]: https://www.sqlite.org/ "Low footprint embedded database"
 
