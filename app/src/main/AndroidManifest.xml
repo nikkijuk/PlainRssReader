@@ -47,7 +47,7 @@
 
         <provider
             android:name=".contentprovider.ArticleContentProvider"
-            android:authorities="com.nikkijuk"
+            android:authorities="com.nikkijuk.article.provider"
             android:enabled="true"
             android:exported="true"></provider>
     </application>

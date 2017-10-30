@@ -8,9 +8,7 @@ import android.util.Log;
 
 import com.jukkanikki.plainrssreader.db.AppDatabase;
 import com.jukkanikki.plainrssreader.db.Article;
-import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.util.ArticlesUtil;
-import com.jukkanikki.plainrssreader.util.FileUtil;
 
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class ContentDbReadyReceiver extends BroadcastReceiver {
         AppDatabase db = AppDatabase.getInMemoryDatabase(context);
 
         // get all articles
-        List<Article> articles = db.articleModel().loadAllArticles();
+        List<Article> articles = db.articleModel().allArticles();
 
         // bind articles to acticle view
         ArticlesUtil.bindViewToArticles(context ,articleView, articles);

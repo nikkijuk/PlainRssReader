@@ -47,7 +47,7 @@ public class ArticleDbTests {
 
         articleDao.insertArticle(article); // insert article
 
-        List<Article> articles = articleDao.loadAllArticles(); // get list of articles
+        List<Article> articles = articleDao.allArticles(); // get list of articles
 
         Assert.assertEquals(1, articles.size());
 
