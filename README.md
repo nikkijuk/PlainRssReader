@@ -211,7 +211,7 @@ Browsing items is implemented using RecyclerView as defined in [use recycler-vie
 
 Storing and changing settings is implemented using PreferefencesFragment as defined in [use preferences]
 
-Due to limiations and interoperability issues with [Room] annotation processors [AutoValue] and [Lombok] aren't used to reduce boilerplate code of model classes, see [AutoValue issue] and [Room issue] for deeper discussion.
+Due to limitations and interoperability issues with [Room] annotation processors [AutoValue] and [Lombok] aren't used to reduce boilerplate code of model classes, see [AutoValue issue] and [Room issue] for deeper discussion.
 
 Planned: In app asynchronous processing and communication is documented at [Background processing best practices].
 
@@ -270,17 +270,6 @@ settings
 change url dialog
 
 ![settings-url]
-
-# Missing features
-
-No persistence implemented
-- Feed isn't saved locally, but is always retrieved from server
-
-No junit tests for real functionality
-- Only single dummy test present
-
-Async backgroud processing
-- Not implemented except skeletons / logging
 
 # Known bugs
 
