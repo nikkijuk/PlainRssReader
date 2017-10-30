@@ -43,8 +43,13 @@
         <receiver
             android:name=".events.ContentFileReadyReceiver"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
+        <provider
+            android:name=".contentprovider.ArticleContentProvider"
+            android:authorities="com.nikkijuk"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>
