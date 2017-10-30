@@ -417,3 +417,5 @@ User given url is not checked, and when trying to use wrong url during startup a
 [mockup-list]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-list.png "Mockup: List of feeds"
 [mockup-item]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-item.png "Mockup: Feed item"
 [mockup-settings]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-settings.png "Mockup: Settings"
+
+[LifecycleAwareRssReader]: https://github.com/nikkijuk/LifecycleAwareRssReader
