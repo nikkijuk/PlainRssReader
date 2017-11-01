@@ -45,13 +45,17 @@ public class DbUtil {
     public static void populateDbFromFeed(AppDatabase db, FeedWrapper feed) {
         db.articleModel().deleteAll(); // empty
 
-        // add all articles to db
-        for (FeedItem item:feed.getItems()) {
-            addArticle(db, item.getGuid(), item.getTitle(), item.getPubDate(), item.getLink(), item.getContent());
+        if (feed.items != null) {
+
+            // add all articles to db
+            for (FeedItem item : feed.getItems()) {
+                addArticle(db, item.getGuid(), item.getTitle(), item.getPubDate(), item.getLink(), item.getContent());
+            }
+
+            Log.d(TAG, "written articles to db");
+        } else {
+            Log.d(TAG, "Nothing to be written");
         }
-
-        Log.d(TAG,"written articles to db");
-
     }
 
 }

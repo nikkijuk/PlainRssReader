@@ -19,6 +19,12 @@ public class PreferencesUtil {
     // Default feed used
     private final static String DEFAULT_RSS_URL ="http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
 
+    // Please see here possible nyt feeds for testing
+    //
+    // http://www.nytimes.com/services/xml/rss/index.html
+    //
+    // ex. http://rss.nytimes.com/services/xml/rss/nyt/Arts.xml
+
     /**
      * Reads url, and uses default if preferences is empty
      */

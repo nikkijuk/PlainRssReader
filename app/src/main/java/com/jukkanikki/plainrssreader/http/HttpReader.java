@@ -69,7 +69,7 @@ public class HttpReader {
             // in case of emergency please allow logging
             // e.printStackTrace();
         }
-        return ""; // RETURN EMPTY
+        return "{}"; // RETURN EMPTY
 
     }
 

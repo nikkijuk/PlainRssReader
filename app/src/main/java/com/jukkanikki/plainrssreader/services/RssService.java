@@ -54,7 +54,7 @@ public class RssService extends IntentService {
 
         // get data using http
         String data = HttpReader.getData(urlString);
-        Log.d(TAG,"received data :"+data.substring(0,100));
+        Log.d(TAG,"received data :"+data.substring(0,data.length() > 100?100:data.length()));
 
         // save content to file identified with url
         File file = FileUtil.createTempFile(context, urlString, data);

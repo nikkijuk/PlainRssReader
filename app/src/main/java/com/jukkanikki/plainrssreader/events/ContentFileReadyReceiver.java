@@ -21,7 +21,7 @@ import com.jukkanikki.plainrssreader.util.FileUtil;
  */
 public class ContentFileReadyReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "ContentFileReadyReceiver";
+    private static final String TAG = "ContentFileReadyRcvr";
 
     private RecyclerView articleView;
 
@@ -44,7 +44,7 @@ public class ContentFileReadyReceiver extends BroadcastReceiver {
         Log.d(TAG,"Content ready at :"+fileUri);
 
         String data = FileUtil.readContentFromUri(fileUri); //Get the text file
-        Log.d(TAG,"read data from temp :"+data.substring(0,100));
+        Log.d(TAG,"read data from temp :"+data.substring(0,data.length() > 100?100:data.length()));
 
         // Fill list of articles
         FeedWrapper feed = ArticlesUtil.convertToObjects(data);
