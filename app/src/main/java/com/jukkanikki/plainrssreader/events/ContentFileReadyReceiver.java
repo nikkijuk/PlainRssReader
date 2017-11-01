@@ -21,7 +21,7 @@ import com.jukkanikki.plainrssreader.util.FileUtil;
  */
 public class ContentFileReadyReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "ContentFileReadyRcvr";
+    private static final String TAG = "ContentFileReadyRcvr"; // full class name is too long
 
     private RecyclerView articleView;
 
