@@ -284,8 +284,7 @@ change url dialog
 
 # Known bugs
 
-User given url is not checked, and when trying to use wrong url during startup app will crash. Sorry. No safety net there. 
-- This bug is pretty annoying, since after giving false URL one needs to manually clear setting of App to get it starting again.
+User given url is not checked (syntax, existence). When app uses incorrect url app is rendering empty list. User has hard time of knowing what went wrong, so it would be nice to verify url when given and show error message when url can't be reached.
 
 [Coursera Android Programming Capstone]: https://www.coursera.org/learn/aadcapstone/home/welcome "Coursera Android Capstone"
 
