@@ -282,6 +282,10 @@ change url dialog
 
 ![settings-url]
 
+# Videos
+
+LogCat logging and apps's usage can be seen as screencast [PlainRssReader in YouTube] and [PlainRssReader Mp4]
+
 # Known bugs
 
 User given url is not checked (syntax, existence). When app uses incorrect url app is rendering empty list. User has hard time of knowing what went wrong, so it would be nice to verify url when given and show error message when url can't be reached.
@@ -418,3 +422,8 @@ User given url is not checked (syntax, existence). When app uses incorrect url a
 [mockup-settings]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/marvel-mockup-settings.png "Mockup: Settings"
 
 [LifecycleAwareRssReader]: https://github.com/nikkijuk/LifecycleAwareRssReader
+
+[PlainRssReader in YouTube]: https://youtu.be/tw-Dy23_uuU
+
+[PlainRssReader Mp4]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader.mp4
+
