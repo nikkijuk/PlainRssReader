@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -39,6 +40,12 @@ public class FeedActivityTest {
 
         // url field is shown
         onView(withText("Url")).check((matches(isDisplayed())));
+
+        // back button pressed
+        pressBack();
+
+        // button is visible again
+        onView(withId(R.id.btnSettings)).check(matches(isDisplayed()));
 
     }
 
