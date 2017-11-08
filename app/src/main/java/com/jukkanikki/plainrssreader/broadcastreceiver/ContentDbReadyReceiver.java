@@ -1,4 +1,4 @@
-package com.jukkanikki.plainrssreader.events;
+package com.jukkanikki.plainrssreader.broadcastreceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

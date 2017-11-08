@@ -1,5 +1,8 @@
-package com.jukkanikki.plainrssreader.events;
+package com.jukkanikki.plainrssreader.broadcastreceiver;
 
+/**
+ * Constant for content of broadcast event
+ */
 public class Events {
 
     // Defines a custom Intent action

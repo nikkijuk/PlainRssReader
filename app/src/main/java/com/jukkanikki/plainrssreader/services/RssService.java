@@ -7,7 +7,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.jukkanikki.plainrssreader.db.AppDatabase;
-import com.jukkanikki.plainrssreader.events.Events;
+import com.jukkanikki.plainrssreader.broadcastreceiver.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.util.ArticlesUtil;
@@ -57,6 +57,7 @@ public class RssService extends IntentService {
         Log.d(TAG,"received data :"+data.substring(0,data.length() > 100?100:data.length()));
 
         // save content to file identified with url
+        // writing file might not be really needed except for debugging
         File file = FileUtil.createTempFile(context, urlString, data);
 
         // marshal to feed

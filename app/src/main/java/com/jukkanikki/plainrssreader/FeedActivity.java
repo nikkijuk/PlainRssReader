@@ -3,7 +3,6 @@ package com.jukkanikki.plainrssreader;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +14,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.jukkanikki.plainrssreader.events.ContentDbReadyReceiver;
-import com.jukkanikki.plainrssreader.events.ContentFileReadyReceiver;
-import com.jukkanikki.plainrssreader.events.Events;
-import com.jukkanikki.plainrssreader.http.HttpReader;
-import com.jukkanikki.plainrssreader.model.FeedWrapper;
+import com.jukkanikki.plainrssreader.broadcastreceiver.ContentDbReadyReceiver;
+import com.jukkanikki.plainrssreader.broadcastreceiver.Events;
 import com.jukkanikki.plainrssreader.services.RssService;
-import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.util.PreferencesUtil;
 
+/**
+ * Main activity of app
+ */
 public class FeedActivity extends AppCompatActivity {
 
     private static final String TAG = "FeedActivity";
@@ -32,10 +30,6 @@ public class FeedActivity extends AppCompatActivity {
     private RecyclerView articleView;
 
     // receiver for content ready notifications
-
-    // --> content from dbn
-    //ContentFileReadyReceiver contentReadyReceiver = new ContentFileReadyReceiver();
-
     // --> content from db
     ContentDbReadyReceiver contentReadyReceiver = new ContentDbReadyReceiver();
 
@@ -70,12 +64,9 @@ public class FeedActivity extends AppCompatActivity {
         super.onResume();
         registerContentReadyReceiver(); // listen content ready events
 
-
         // call backgroud service to read feed
-
-        //loadRssUsingAsyncTask(); // NOTE: async task
-
-        loadRssUsingIntentService(); // NOTE: intent service + broadcast receiver
+        // using intent service + broadcast receiver
+        loadRssUsingIntentService();
     }
 
     /**
@@ -118,53 +109,6 @@ public class FeedActivity extends AppCompatActivity {
         startActivity(settingsIntent); // opens settings activity
     }
 
-    /**
-     * Load rss feed content asynchronously
-     *
-     * this method is kinda ok, but as activity might just die without saying goodbye
-     * it might be that when async task is finished there's nothing that could be updated
-     * (original activity of which async task was part is gone)
-     */
-    private void loadRssUsingAsyncTask() {
-        AsyncTask<String, String, String> loadRSSAsync = new AsyncTask<String, String, String>() {
-
-            @Override
-            protected void onPreExecute() {
-                // no initialization needed
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                return HttpReader.getData(params[0]); // get http string
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-
-                // at that point activity might be already away if
-                // android has needed memory or configuration changes have happened
-
-                fillArticlesView(s); // set result to acticles view
-            }
-        };
-
-        String rssUrl = PreferencesUtil.getRssUrl(this); // get url from preferences or default
-
-        // start execution of async task
-        // at that point activity exists always
-        loadRSSAsync.execute(rssUrl);
-    }
-
-    /**
-     * Fill list of articles
-     * @param json json content
-     */
-    private void fillArticlesView(String json) {
-        FeedWrapper feed = ArticlesUtil.convertToObjects(json);     // currently displayed feed
-
-        // if activity has died also article view is away and base context can't be found either
-        ArticlesUtil.bindViewToFeed(getBaseContext(),articleView, feed);
-    }
 
     /**
      * Register local receiver for content ready broadcasts

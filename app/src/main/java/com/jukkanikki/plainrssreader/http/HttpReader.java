@@ -17,51 +17,27 @@ import okhttp3.Response;
 */
 public class HttpReader {
 
-    public static OkHttpClient client = new OkHttpClient();
+    public static final String EMPTY_JSON = "{}";
 
+    public static OkHttpClient client = new OkHttpClient(); // static, initialized once
+
+    /**
+     * read http from url
+     * implementation whith okHttp library
+     * clean and simple api makes it easy to understand what here happens
+     *
+     * @param urlString
+     * @return
+     */
     public static String getData(String urlString) {
 
-
-        // Commented out plain java implementation
-        // This code will be later removed, now it shows how much cognitive load it requires
-
-        /*
-        HttpURLConnection urlConnection = null;
         try {
-            URL url = new URL(urlString);
-            urlConnection = (HttpURLConnection)url.openConnection();
-
-            if(urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(in));
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while((line = r.readLine()) != null) {
-                    sb.append(line);
-                }
-                return sb.toString();
-            }
-        } catch (IOException e) {
-            // in case of emergency please allow logging
-            // e.printStackTrace();
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-
-        return ""; // RETURN EMPTY
-        */
-
-        // implementation whith okHttp library
-        // clean and simple api makes it easy to understand what here happens
-
-        try {
+            // build request object
             Request request = new Request.Builder()
                     .url(urlString)
                     .build();
 
+            // call with try-with-resources, cleanup is then automatic
             try (Response response = client.newCall(request).execute()) {
                 return response.body().string();
             }
@@ -69,7 +45,7 @@ public class HttpReader {
             // in case of emergency please allow logging
             // e.printStackTrace();
         }
-        return "{}"; // RETURN EMPTY
+        return EMPTY_JSON; // empty object can be parsed without problems, it just won't contain data
 
     }
 

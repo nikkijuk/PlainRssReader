@@ -8,6 +8,9 @@ import com.jukkanikki.plainrssreader.db.Article;
 import com.jukkanikki.plainrssreader.model.FeedItem;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 
+/**
+ * Helper methods to work with database
+ */
 public class DbUtil {
 
     private static final String TAG = "DbUtil";

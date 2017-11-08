@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-
+/**
+ * Helper methods to work with preferences
+ */
 public class PreferencesUtil {
 
     private PreferencesUtil () {}

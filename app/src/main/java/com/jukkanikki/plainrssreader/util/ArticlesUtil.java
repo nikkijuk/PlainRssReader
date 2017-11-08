@@ -5,29 +5,17 @@ import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.jukkanikki.plainrssreader.adapters.ArticleAdapter;
-import com.jukkanikki.plainrssreader.adapters.FeedAdapter;
 import com.jukkanikki.plainrssreader.db.Article;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 
 import java.util.List;
 
+/**
+ * Helper methods to work with arcicles
+ */
 public class ArticlesUtil {
 
     private ArticlesUtil () {} // helper class, not possible to instantiate
-
-    /**
-     * Binds feed to view by creating needed adapter, setting it and requesting state refresh
-     *
-     * @param context
-     * @param view
-     * @param feed
-     */
-    public static void bindViewToFeed(Context context, RecyclerView view, FeedWrapper feed) {
-        // TODO: creating new adapter after each update of values might not be right thing to do ..
-        FeedAdapter adapter = new FeedAdapter(feed, context); // create adapter
-        view.setAdapter(adapter); // set adapter
-        adapter.notifyDataSetChanged(); // inform adapter that it should update
-    }
 
     /**
      * Binds articles to view by creating needed adapter, setting it and requesting state refresh

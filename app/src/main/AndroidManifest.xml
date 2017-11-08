@@ -40,11 +40,6 @@
         Note: manifest entry might not be needed for local receivers anyway
         -->
 
-        <receiver
-            android:name=".events.ContentFileReadyReceiver"
-            android:enabled="true"
-            android:exported="false" />
-
         <provider
             android:name=".contentprovider.ArticleContentProvider"
             android:authorities="com.nikkijuk.article.provider"
