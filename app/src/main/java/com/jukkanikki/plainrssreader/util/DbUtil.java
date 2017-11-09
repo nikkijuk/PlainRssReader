@@ -8,6 +8,8 @@ import com.jukkanikki.plainrssreader.db.Article;
 import com.jukkanikki.plainrssreader.model.FeedItem;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 
+import java.util.List;
+
 /**
  * Helper methods to work with database
  */
@@ -60,5 +62,19 @@ public class DbUtil {
             Log.d(TAG, "Nothing to be written");
         }
     }
+
+    /**
+     * read articles from db
+     *
+     * @param db
+     */
+    public static List<Article> readArticles(AppDatabase db) {
+        // get all articles
+        List<Article> articles = db.articleModel().allArticles();
+
+        // add debug here if needed
+        return articles;
+    }
+
 
 }

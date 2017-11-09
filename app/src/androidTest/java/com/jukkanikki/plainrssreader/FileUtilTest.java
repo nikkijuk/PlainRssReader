@@ -35,7 +35,6 @@ public class FileUtilTest {
         context = InstrumentationRegistry.getTargetContext();
     }
 
-
     /**
      * Write JSON to file - this test is run on android
      */
