@@ -15,6 +15,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import java.util.List;
 
+/**
+ * Tests arcticleDao and appDatabase directly
+ */
 @RunWith(AndroidJUnit4.class)
 public class ArticleDbTests {
 
@@ -34,6 +37,9 @@ public class ArticleDbTests {
         db.destroyInstance(); // free db instance from memory
     }
 
+    /**
+     * Create, write and read article
+     */
     @Test
     public void storeAndReadArticles() {
         articleDao.deleteAll(); // see that it's empty (it's in memory - so - it will be)

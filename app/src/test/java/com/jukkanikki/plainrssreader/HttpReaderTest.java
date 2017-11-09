@@ -7,6 +7,13 @@ import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Test http related operations
+ *
+ * NOTE: tests using live data - this test is unreliable, as live endpoints might not be available when test is run
+ *
+ * NOTE: this test could use mocking to prevent usage of live data
+ */
 public class HttpReaderTest {
 
     private static final String EMPTY_JSON = "{}";
@@ -17,8 +24,8 @@ public class HttpReaderTest {
 
 
     /**
-         * Retrieve feed using http
-         */
+     * Retrieve feed using http
+     */
     @Test
     public void getContentFromValidUrl () {
 

@@ -17,6 +17,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * Test using content provider
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class ArticleContentProviderTest {
@@ -42,6 +45,9 @@ public class ArticleContentProviderTest {
         db.destroyInstance();
     }
 
+    /**
+     * Test that database is empty when starting - should be, since it's in memory db
+     */
     @Test
     public void article_initiallyEmpty() {
 
@@ -55,6 +61,9 @@ public class ArticleContentProviderTest {
         cursor.close();
     }
 
+    /**
+     * insert and read article
+     */
     @Test
     public void article_query() {
 

@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
+ * Json related operations test
+ *
  * Test unit of work - does not have dependencies to android
  */
 public class JsonUtilTest {
