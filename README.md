@@ -234,7 +234,7 @@ There's at least one more way of calling http service and working on results. Co
 
 I have tried to persist results of feed reading in intent service to temporary file and then reading results at broadcast receiver. While this works feed is just big single CLOB which needs to be read to memory for parsing. Location of file needs to be sent from intent service to broadcast receiver using extras of intent.
 
-See separate branch of app for full implementation using file based messaging.
+You can look at [PlainRssReader file based impl] branch for implementation using file based messaging.
 
 ## persisting articles to SQLite
 
@@ -375,6 +375,8 @@ User given url is not checked (syntax, existence). When app uses incorrect url a
 [Sample content provider]: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceContentProviderSample/app/src/main/java/com/example/android/contentprovidersample/provider/SampleContentProvider.java "Sample content provider"
 
 [ArticleContentProvider]: https://github.com/nikkijuk/PlainRssReader/blob/master/app/src/main/java/com/jukkanikki/plainrssreader/contentprovider/ArticleContentProvider.java
+
+[PlainRssReader file based impl]: https://github.com/nikkijuk/PlainRssReader/tree/multiple-variants-experimented
 
 [SQLite]: https://www.sqlite.org/ "Low footprint embedded database"
 
