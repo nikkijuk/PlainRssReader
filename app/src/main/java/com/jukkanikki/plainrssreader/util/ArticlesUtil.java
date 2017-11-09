@@ -11,7 +11,7 @@ import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import java.util.List;
 
 /**
- * Helper methods to work with arcicles
+ * Helper methods to work with articles
  */
 public class ArticlesUtil {
 
@@ -30,17 +30,5 @@ public class ArticlesUtil {
         view.setAdapter(adapter); // set adapter
         adapter.notifyDataSetChanged(); // inform adapter that it should update
     }
-
-
-    /**
-     * Convert json to pojos using gson
-     * @param json json
-     * @return FeedWrapper as root of object graph
-     */
-    public static FeedWrapper convertToObjects(String json) {
-        // TODO: GSON is created during each conversion - reusing possibilities need to be analyzed
-        return new Gson().fromJson(json, FeedWrapper.class); // json -> pojos
-    }
-
 
 }

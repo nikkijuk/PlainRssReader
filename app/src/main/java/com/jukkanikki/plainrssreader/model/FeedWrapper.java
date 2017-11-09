@@ -6,6 +6,7 @@ import java.util.List;
 * Feed wrapper represents root element of json structure
 *
 * Many fields are never used in this application, but they are here since they MIGHT be needed.
+* YAGNI not followed, sorry. Here the main motivation is to show how whole document can be converted.
 */
 public class FeedWrapper {
 

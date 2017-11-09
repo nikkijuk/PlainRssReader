@@ -5,6 +5,9 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+/**
+ * Database is singleton for retrieving handle to RoomDatabase instance
+ */
 @Database(entities = {Article.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 

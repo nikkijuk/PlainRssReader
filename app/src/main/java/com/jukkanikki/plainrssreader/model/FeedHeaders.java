@@ -1,7 +1,7 @@
 package com.jukkanikki.plainrssreader.model;
 
 /**
-* Metadata of feed. Not really needed.
+* Metadata of feed. Not really needed. Included here to show how json and pojo's can be mapped.
 */
 public class FeedHeaders {
 

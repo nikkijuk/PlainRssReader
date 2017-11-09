@@ -13,6 +13,7 @@ import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.util.DbUtil;
 import com.jukkanikki.plainrssreader.util.FileUtil;
+import com.jukkanikki.plainrssreader.util.JsonUtil;
 
 import java.io.File;
 
@@ -61,7 +62,7 @@ public class RssService extends IntentService {
         File file = FileUtil.createTempFile(context, urlString, data);
 
         // marshal to feed
-        FeedWrapper feed = ArticlesUtil.convertToObjects(data);
+        FeedWrapper feed = JsonUtil.convertToObjects(data);
 
         // write articles from feed to SQLite db using Room
         DbUtil.populateDbFromFeed(db, feed);

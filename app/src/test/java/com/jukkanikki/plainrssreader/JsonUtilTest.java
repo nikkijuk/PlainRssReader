@@ -2,14 +2,15 @@ package com.jukkanikki.plainrssreader;
 
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.util.ArticlesUtil;
+import com.jukkanikki.plainrssreader.util.JsonUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test unit of work - does not have dependecies to android
+ * Test unit of work - does not have dependencies to android
  */
-public class ArticleUtilTest {
+public class JsonUtilTest {
 
     private static final String EMPTY_JSON = "{}";
 
@@ -24,7 +25,7 @@ public class ArticleUtilTest {
     public void parseJsonTest () {
 
         // marshal to feed
-        FeedWrapper feed = ArticlesUtil.convertToObjects(JSON);
+        FeedWrapper feed = JsonUtil.convertToObjects(JSON);
 
         // check structure
         Assert.assertNotNull(feed);
@@ -43,12 +44,11 @@ public class ArticleUtilTest {
     public void parseEmptyJsonTest () {
 
         // marshal to feed
-        FeedWrapper feed = ArticlesUtil.convertToObjects(EMPTY_JSON);
+        FeedWrapper feed = JsonUtil.convertToObjects(EMPTY_JSON);
 
         // check structure
         Assert.assertNotNull(feed);
         Assert.assertNull(feed.getItems()); // no items parsed
     }
-
 
 }

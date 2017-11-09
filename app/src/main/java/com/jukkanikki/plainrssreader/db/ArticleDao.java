@@ -10,6 +10,11 @@ import java.util.List;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 
+/**
+ * Dao for manipulating article
+ *
+ * All data access operations for article are described here with annotations
+ */
 @Dao
 public interface ArticleDao {
     @Query("select * from "+Article.TABLE_NAME)

@@ -8,6 +8,10 @@ import android.support.annotation.NonNull;
 
 /**
  * Article content.
+ *
+ * Added Room annotations for metadata
+ *
+ * See: https://developer.android.com/topic/libraries/architecture/room.html
  */
 @Entity(tableName = Article.TABLE_NAME)
 public class Article {
@@ -19,29 +23,37 @@ public class Article {
     public static final String COLUMN_ID = "guid";
 
     // column constants
+    // these are not really needed, but they are added for content provider
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_PUBLISH_DATE = "pubDate";
     public static final String COLUMN_LINK = "link";
     public static final String COLUMN_CONTENT = "content";
 
+    // primary key is mandatory
     @PrimaryKey @NonNull
     @ColumnInfo(index = true, name = COLUMN_ID)
     public String guid;
 
+    // column info annotations are optional
     @ColumnInfo(name = COLUMN_TITLE)
     public String title;
 
+    // column info annotations are optional
     @ColumnInfo(name = COLUMN_PUBLISH_DATE)
     public String pubDate;
 
+    // column info annotations are optional
     @ColumnInfo(name = COLUMN_LINK)
     public String link;
 
+    // column info annotations are optional
     @ColumnInfo(name = COLUMN_CONTENT)
     public String content;
 
     /**
      * Create a new {@link Article} from the specified {@link ContentValues}.
+     *
+     * This method is needed only for content provider
      *
      * @param values A {@link ContentValues} that contain record values
      * @return A newly created {@link Article} instance.

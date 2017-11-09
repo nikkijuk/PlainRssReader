@@ -8,6 +8,7 @@ import com.jukkanikki.plainrssreader.db.Article;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.util.DbUtil;
+import com.jukkanikki.plainrssreader.util.JsonUtil;
 
 import junit.framework.Assert;
 
@@ -44,7 +45,7 @@ public class DbUtilTest {
     public void SaveJsonToDbAndReadTest () {
 
         // marshal to feed
-        FeedWrapper feed = ArticlesUtil.convertToObjects(JSON);
+        FeedWrapper feed = JsonUtil.convertToObjects(JSON);
 
         // write articles from feed to SQLite db using Room
         DbUtil.populateDbFromFeed(db, feed);
