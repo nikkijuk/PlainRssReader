@@ -1,7 +1,6 @@
 # PlainRssReader
 
-PlainRssReader is very very simple app which reads rss files, 
-converts them to json using web api and allows browsing thru simple list
+PlainRssReader is simple app which reads rss files, converts them to json using web api and allows browsing articles.
 
 # Background
 
@@ -13,13 +12,11 @@ README.md contains architecture, design and implementation artifacts like mockup
 
 # Repository
 
-Instead of having private GitLab repository I've decided to go with public Github account to share my experience with larger community.
-
 Repositorys docs directory contains resources which accompany this documentation, otherwise repository contains solely application artifacts.
 
 # Architectural requirements 
 
-Requirements for apps architecture and structure are 
+Requirements for apps architecture and structure were 
 
 ```
 - Interact with at least one remotely-hosted web service over the network via HTTP.
@@ -28,7 +25,7 @@ Requirements for apps architecture and structure are
 
 # User facing functionality
 
-Requirements for apps user interface are 
+[Coursera Android Programming Capstone] requirements were
 
 ```
 a hypothetical RSS/Atom reader app might have multiple screens, such as
@@ -42,7 +39,7 @@ a hypothetical RSS/Atom reader app might have multiple screens, such as
 * Have well documented source code and a short video that shows how your app works when it's run.
 ```
 
-To study technical abilities of Android more than implement novel solution I've decided to implement stripped down RSS reader as suggested.
+To study technical abilities of Android more than implement novel solution I've decided to go with stripped down RSS reader as suggested.
 
 # External services
 
@@ -50,7 +47,7 @@ I've decided to go with http protocol with json payload. For this reason I'll co
 
 XML to Json conversion is done using [rss2json] service. [Gson] is used to marshall returned JSON to Plain Java Pojos.
 
-Example url of background service. rss_url query parameter defines source of rss feed.
+Example url of background service uses rss_url query parameter to define source of rss feed.
 
 ```
  https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss
@@ -60,20 +57,22 @@ Example url of background service. rss_url query parameter defines source of rss
 
 "[Software architecture] is those decisions which are both important and hard to change." - Martin Fowler.
 
-Development is done using [Android Studio], which is currently at 3.0 RC1. RC is used 'cos it has [Java 8 support] and lambdas are pretty nice.
+Development is done using [Android Studio], which is currently at 3.0. Android Studio 3.0 has [Java 8 support]. Just Works!
 
 I have decided to start with simple architecure with more or less vanilla android components working on [API-level 16] or [API-level 19]. Java 8 Streams are not used, since they doesn't exist before [API-level 24]. [Android devices] with API-level 24 are still not commonly in use, but 19 is safe choice for most users.
 
-I'll try later to expand application with selected [Android architecture components], escpecially [Room] for persistence. 
+App uses selected [Android architecture components], escpecially [Room] for persistence. 
 
-I'm considering to use
+# DI and Other possible libraries
+
+Dependency injection would have been nice, but I didn't have time to experiment with it.
+
+Interesting libraties i did consider to use are
 - [Dagger]
 - [Retrofit]
 - [Android annotations]
 
-But it will be of highest priority to keep code working, not to polish it with unnecessary features and add code and libraries without real benefits. For this reason [Guava] is not yet in use, even if I see it as useful tool.
-
-I try to keep in mind that [64K DEX limit] can possibly make my life hard as I'm not willing to invest in learning bytecode optimization tricks with [ProGuard] in this phase of development.
+I had doubths that [64K DEX limit] can possibly make my life hard as I'm not willing to invest in learning bytecode optimization tricks with [ProGuard] in this phase of development. For this reason [Guava] is not yet in use, even if I see it as useful tool.
 
 # Architecture diagrams
 
@@ -141,20 +140,13 @@ Without such rigid restrictions of techniques to use application could have look
 
 ## Role of Content provider
 
-Content providers shouldn't be used, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". 
+Content providers can be used to share data, as stated on [Sample content provider] code, "you don't need to implement a ContentProvider unless you want to expose the data outside your process or your application already uses a ContentProvider.". 
 
 Please also refer to official documentation of [Content Provider], which says "Use content providers if you plan to share data. If you don’t plan to share data, you may still use them because they provide a nice abstraction, but you don’t have to."
 
-Implementing [Content provider] would add complexity without any gains, so it's easier, faster and better to use [SQLite] directly or using [Room].
+Implementing [Content provider] can add complexity without gains, so it's easier, faster and better to use [SQLite] directly or using [Room]. 
 
-NOTE: THERE IS READ ONLY CONTENT PROVIDER IMPLEMENTED! This was necessary, as one needs to get full points and use all components to get further in capstone project. I feel this bit daunting, but so are rules ..
-
-```
-Try again
-You earned 25 points, but you need to earn at least 30 / 30 points to pass. Review your feedback below, improve your submission, and resubmit when you're ready. 
-```
-
-Please see here implementation of [ArticleContentProvider]
+In this App there's read only content provider implemented. Please see here implementation of [ArticleContentProvider]
 
 ## Role of Services and Broadcast Receivers
 
@@ -232,7 +224,7 @@ It's possible to use [HttpUrlConnection] for getting json data. As implementatio
 
 As API is actually just normal get, which has nothing to do with Rest, using [Retrofit] seems overkill - so I won't try it even if it looks very handy.
 
-To allow calling using simple api [okHttp] seems to be optimal. It doesn't hide IO errors, but simplifies creating connection, closing connection, parsing response body, etc. See [okHttp documentation] for more.
+To allow hpp calls using simple api [okHttp] seems to be optimal. It doesn't hide IO errors, but simplifies creating connection, closing connection, parsing response body, etc. See [okHttp documentation] for more.
 
 Note that [OkHttp] uses [okIo] to optimize usage of javas IO system, which should lead to higher performance and reliability.
 
@@ -241,6 +233,8 @@ There's at least one more way of calling http service and working on results. Co
 ## persisting feeds to temporaty file
 
 I have tried to persist results of feed reading in intent service to temporary file and then reading results at broadcast receiver. While this works feed is just big single CLOB which needs to be read to memory for parsing. Location of file needs to be sent from intent service to broadcast receiver using extras of intent.
+
+See separate branch of app for full implementation using file based messaging.
 
 ## persisting articles to SQLite
 
