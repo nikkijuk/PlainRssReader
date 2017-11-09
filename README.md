@@ -178,6 +178,25 @@ I might also implement simple flow using [Volley]. See [Volley tutorial] for mor
 
 Motivation for buffering results for offline use can be seen at [Next Billion Users]
 
+# Testing plan
+
+Three levels of testing is used
+- Unit tests without dependency to Android
+- Integration tests with dependency to Android
+- Ui tests 
+
+Unit tests are fastest to run and of smallest granularity. They are used always when possible.
+
+Most testing happens on Unit and Integration tests, and UI tests are used rarely. 
+
+Please see [Android testing tutorial] for basics and junit and integration tests tutorial. 
+
+For end to end tests [Espresso tutorial] shows how to insturment ui classes like activity and run them and [UiAutomator tutorial] explains how to instrument whole device and run it.
+
+Want to try it with code? Then [android testing codelab] is very useful.
+
+Please see this in context of [Testing pyramid] and what kind of value each type of test provides. 
+
 # Use cases
 
 [yEd] was used to draw simple diagram of use cases.
@@ -381,6 +400,16 @@ User given url is not checked (syntax, existence). When app uses incorrect url a
 [Sample content provider]: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceContentProviderSample/app/src/main/java/com/example/android/contentprovidersample/provider/SampleContentProvider.java "Sample content provider"
 
 [ArticleContentProvider]: https://github.com/nikkijuk/PlainRssReader/blob/master/app/src/main/java/com/jukkanikki/plainrssreader/contentprovider/ArticleContentProvider.java
+
+[Testing pyramid]: https://testing.googleblog.com/2015/04/just-say-no-to-more-end-to-end-tests.html
+
+[Android testing tutorial]: http://www.vogella.com/tutorials/AndroidTesting/article.html
+
+[Espresso tutorial]: http://www.vogella.com/tutorials/AndroidTestingEspresso/article.html
+
+[UiAutomator tutorial]: http://www.vogella.com/tutorials/AndroidTestingUIAutomator/article.html
+
+[Android testing codelab]: https://codelabs.developers.google.com/codelabs/android-testing/index.html#0
 
 [SQLite]: https://www.sqlite.org/ "Low footprint embedded database"
 
