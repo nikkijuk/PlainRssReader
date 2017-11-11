@@ -3,7 +3,9 @@ package com.jukkanikki.plainrssreader;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +48,11 @@ public class FeedActivityTest {
 
         // button is visible again
         onView(withId(R.id.btnSettings)).check(matches(isDisplayed()));
+
+        // check that list contains multiple items
+        RecyclerView articleView  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
+        int itemCount = articleView.getAdapter().getItemCount();
+        Assert.assertTrue(itemCount > 0);
 
     }
 
