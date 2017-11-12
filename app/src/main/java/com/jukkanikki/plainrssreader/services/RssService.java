@@ -47,7 +47,7 @@ public class RssService extends IntentService {
         Context context = getBaseContext();
 
         // get db
-        AppDatabase db = AppDatabase.getInMemoryDatabase(context);
+        AppDatabase db = AppDatabase.getDatabase(context);
 
         // gets url from the incoming Intent
         String urlString = intent.getDataString();

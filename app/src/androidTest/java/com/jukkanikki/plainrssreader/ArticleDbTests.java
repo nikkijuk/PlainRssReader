@@ -17,6 +17,8 @@ import java.util.List;
 
 /**
  * Tests arcticleDao and appDatabase directly
+ *
+ * Test sets up in memory SQLLite db instance and uses it
  */
 @RunWith(AndroidJUnit4.class)
 public class ArticleDbTests {
@@ -28,7 +30,13 @@ public class ArticleDbTests {
     @Before
     public void setUp() {
         Context context = InstrumentationRegistry.getTargetContext();
-        db = AppDatabase.getInMemoryDatabase(context); // get db
+
+        // In memory
+//        db = AppDatabase.getInMemoryDatabase(context); // get db
+
+        // persisted
+        db = AppDatabase.getDatabase(context); // get db
+
         articleDao = db.articleModel(); // get dao for articles
     }
 
@@ -42,7 +50,7 @@ public class ArticleDbTests {
      */
     @Test
     public void storeAndReadArticles() {
-        articleDao.deleteAll(); // see that it's empty (it's in memory - so - it will be)
+        articleDao.deleteAll(); // see that it's empty
 
         Article article = new Article();
         article.guid = "1";

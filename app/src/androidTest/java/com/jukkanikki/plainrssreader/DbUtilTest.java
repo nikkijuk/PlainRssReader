@@ -35,7 +35,7 @@ public class DbUtilTest {
         // get context from android
         context = InstrumentationRegistry.getTargetContext();
 
-        db = AppDatabase.getInMemoryDatabase(context); // get db
+        db = AppDatabase.getDatabase(context); // get db
     }
 
     /**

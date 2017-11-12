@@ -42,7 +42,7 @@ public class ContentDbReadyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         // get db
-        AppDatabase db = AppDatabase.getInMemoryDatabase(context);
+        AppDatabase db = AppDatabase.getDatabase(context);
 
         // get all articles
         List<Article> articles = DbUtil.readArticles(db);

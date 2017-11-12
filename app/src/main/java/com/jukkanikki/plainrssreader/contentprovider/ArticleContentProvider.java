@@ -79,7 +79,7 @@ public class ArticleContentProvider extends ContentProvider {
                 return null;
             }
             // get db
-            AppDatabase db = AppDatabase.getInMemoryDatabase(context);
+            AppDatabase db = AppDatabase.getDatabase(context);
 
             final Cursor cursor;
             if (code == CODE_ARTICLE_DIR) {

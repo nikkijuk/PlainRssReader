@@ -56,7 +56,7 @@ public class FeedActivityTest {
     @Before
     public void setUp() {
         Context context = InstrumentationRegistry.getTargetContext();
-        db = AppDatabase.getInMemoryDatabase(context); // get db
+        db = AppDatabase.getDatabase(context); // get db
         articleDao = db.articleModel(); // get dao for articles
     }
 
@@ -103,6 +103,8 @@ public class FeedActivityTest {
         // button is visible again
         onView(withId(R.id.btnSettings)).check(matches(isDisplayed()));
 
+        // GREY TEST: find recycler view from app, get adapter, find out amount of articles
+
         // check that list contains multiple items
         RecyclerView articleView  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
         int itemCount = articleView.getAdapter().getItemCount();
@@ -125,6 +127,8 @@ public class FeedActivityTest {
         RecyclerView articleView3  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
         int itemCount3 = articleView3.getAdapter().getItemCount();
         Assert.assertTrue(itemCount3 > 0);
+
+        // GREY TEST: find out amount of articles from db, compare to amount of articles in view
 
         // check that db has same amount of items as adapter
         long dbCount = articleDao.countArticles();

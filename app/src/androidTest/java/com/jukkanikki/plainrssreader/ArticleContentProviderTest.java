@@ -33,7 +33,7 @@ public class ArticleContentProviderTest {
         final Context context = InstrumentationRegistry.getTargetContext();
 
         // initialize db
-        db = AppDatabase.getInMemoryDatabase(context);
+        db = AppDatabase.getDatabase(context);
 
         mContentResolver = context.getContentResolver();
     }
