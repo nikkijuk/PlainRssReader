@@ -21,9 +21,9 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ArticleDbTests {
 
-    AppDatabase db;
+    private AppDatabase db;
 
-    ArticleDao articleDao;
+    private ArticleDao articleDao;
 
     @Before
     public void setUp() {
@@ -52,6 +52,9 @@ public class ArticleDbTests {
         article.content = "articleContent";
 
         articleDao.insertArticle(article); // insert article
+
+        long count = articleDao.countArticles(); // get amount of articles
+        Assert.assertEquals(1, count);
 
         List<Article> articles = articleDao.allArticles(); // get list of articles
 

@@ -1,13 +1,20 @@
 package com.jukkanikki.plainrssreader;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.SystemClock;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 
+import com.jukkanikki.plainrssreader.db.AppDatabase;
+import com.jukkanikki.plainrssreader.db.ArticleDao;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +32,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Test interactions starting from main FeedActivity
+ *
+ * This is grey-box test as it looks inside app's database and view
+ * to find out that adapter is loaded with right amount of articles
  */
 @RunWith(AndroidJUnit4.class)
 public class FeedActivityTest {
@@ -35,10 +45,26 @@ public class FeedActivityTest {
 
     private static final String PREF_URL_KEY = "rss_source";
 
+    private AppDatabase db;
+
+    private ArticleDao articleDao;
 
     @Rule
     public ActivityTestRule<FeedActivity> mActivityRule =
             new ActivityTestRule<>(FeedActivity.class);
+
+    @Before
+    public void setUp() {
+        Context context = InstrumentationRegistry.getTargetContext();
+        db = AppDatabase.getInMemoryDatabase(context); // get db
+        articleDao = db.articleModel(); // get dao for articles
+    }
+
+    @After
+    public void tearDown() {
+        db.destroyInstance(); // free db instance from memory
+    }
+
 
     @Test
     public void settingsButtonWorks() {
@@ -99,6 +125,11 @@ public class FeedActivityTest {
         RecyclerView articleView3  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
         int itemCount3 = articleView3.getAdapter().getItemCount();
         Assert.assertTrue(itemCount3 > 0);
+
+        // check that db has same amount of items as adapter
+        long dbCount = articleDao.countArticles();
+        Assert.assertEquals(dbCount, itemCount3);
+
 
         // now: I'd need to capture screenshots of tests to validate that rotation really happens ..
         // note: one sees on emulator that it happens

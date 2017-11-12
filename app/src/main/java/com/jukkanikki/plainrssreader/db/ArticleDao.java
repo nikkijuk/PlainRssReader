@@ -17,6 +17,9 @@ import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
  */
 @Dao
 public interface ArticleDao {
+    @Query("select count(*) from "+Article.TABLE_NAME)
+    Long countArticles();
+
     @Query("select * from "+Article.TABLE_NAME)
     List<Article> allArticles();
 
