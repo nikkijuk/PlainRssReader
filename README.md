@@ -183,7 +183,9 @@ Most testing happens on Unit and Integration tests, and UI tests are used rarely
 
 Please see [Android testing tutorial] for basics and junit and integration tests tutorial. 
 
-For end to end tests [Espresso tutorial] shows how to insturment ui classes like activity and run them and [UiAutomator tutorial] explains how to instrument whole device and run it.
+UI tests can be implemented with [Black Box Testing] or [Gray Box testing] strategy. I have used [Gray Box Testing] as I believe that it fits naturally to programmers to check functionality against internal structures. 
+
+For UI end to end tests [Espresso tutorial] shows how to instrument ui classes like activity and run them and [UiAutomator tutorial] explains how to instrument whole device and run it.
 
 Want to try it with code? Then [android testing codelab] is very useful.
 
@@ -406,6 +408,10 @@ User given url is not checked (syntax, existence). When app uses incorrect url a
 [UiAutomator tutorial]: http://www.vogella.com/tutorials/AndroidTestingUIAutomator/article.html
 
 [Android testing codelab]: https://codelabs.developers.google.com/codelabs/android-testing/index.html#0
+
+[Gray Box Testing]: https://en.wikipedia.org/wiki/Gray_box_testing
+
+[Black Box Testing]: https://en.wikipedia.org/wiki/Black_box_testing
 
 [SQLite]: https://www.sqlite.org/ "Low footprint embedded database"
 
