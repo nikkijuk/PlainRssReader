@@ -23,13 +23,15 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ArticleDbTests {
 
+    private Context context;
+
     private AppDatabase db;
 
     private ArticleDao articleDao;
 
     @Before
     public void setUp() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationRegistry.getTargetContext();
 
         db = AppDatabase.getDatabase(context); // get db
 

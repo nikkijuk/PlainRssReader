@@ -36,4 +36,13 @@ public class PreferencesUtil {
         String rssUrl = sharedPref.getString(KEY_PREF_SOURCE, DEFAULT_RSS_URL);
         return String.format("%s%s", RSS_TO_JSON_API_API ,rssUrl);
     }
+
+    /**
+     * sets url
+     */
+    public static void setRssUrl(Context context, String rssUrl) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPref.edit().putString(KEY_PREF_SOURCE, rssUrl).commit();
+    }
+
 }

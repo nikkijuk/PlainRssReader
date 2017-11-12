@@ -1,8 +1,10 @@
 package com.jukkanikki.plainrssreader;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
@@ -29,6 +31,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withTagKey;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Test interactions starting from main FeedActivity
@@ -45,6 +49,8 @@ public class FeedActivityTest {
 
     private static final String PREF_URL_KEY = "rss_source";
 
+    private Context context;
+
     private AppDatabase db;
 
     private ArticleDao articleDao;
@@ -55,7 +61,7 @@ public class FeedActivityTest {
 
     @Before
     public void setUp() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationRegistry.getTargetContext();
         db = AppDatabase.getDatabase(context); // get db
         articleDao = db.articleModel(); // get dao for articles
     }
@@ -96,7 +102,10 @@ public class FeedActivityTest {
         //onView(withText("OK")).perform(click());
 
         // test that preferences have changed
-        // onData ..
+
+        // using shared prefs ..
+        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        //assertThat(preferences.getString(PREF_URL_KEY, ""), is(NYT_ARTS_FEED_URL));
 
         // --
 
