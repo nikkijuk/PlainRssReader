@@ -297,7 +297,7 @@ change url dialog
 
 # Videos
 
-LogCat logging and apps's usage can be seen as screencast [PlainRssReader in YouTube] and [PlainRssReader Mp4]
+LogCat logging and apps's usage can be seen as screencast [PlainRssReader in YouTube].
 
 # Known bugs
 
@@ -449,6 +449,3 @@ User given url is not checked (syntax, existence). When app uses incorrect url a
 [LifecycleAwareRssReader]: https://github.com/nikkijuk/LifecycleAwareRssReader
 
 [PlainRssReader in YouTube]: https://youtu.be/tw-Dy23_uuU
-
-[PlainRssReader Mp4]: https://github.com/nikkijuk/PlainRssReader/blob/master/docs/PlainRssReader.mp4
-
