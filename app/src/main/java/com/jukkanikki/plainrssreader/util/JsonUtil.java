@@ -16,7 +16,8 @@ public class JsonUtil {
      * @return FeedWrapper as root of object graph
      */
     public static FeedWrapper convertToObjects(String json) {
-        // TODO: GSON is created during each conversion - reusing possibilities need to be analyzed
+
+        // GSON is created during each conversion - reusing possibilities need to be analyzed
         return new Gson().fromJson(json, FeedWrapper.class); // json -> pojos
     }
 

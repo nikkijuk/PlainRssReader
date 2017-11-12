@@ -3,8 +3,6 @@ package com.jukkanikki.plainrssreader;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
-import com.jukkanikki.plainrssreader.db.AppDatabase;
-import com.jukkanikki.plainrssreader.db.ArticleDao;
 import com.jukkanikki.plainrssreader.util.PreferencesUtil;
 
 import org.junit.Before;
@@ -14,7 +12,9 @@ import static junit.framework.Assert.assertEquals;
 
 public class PreferencesUtilTest {
 
-    private static final String VALID_URL = "https://api.rss2json.com/v1/api.json?rss_url=http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
+    private static final String DEFAULT_URL = "https://api.rss2json.com/v1/api.json?rss_url=http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
+
+    private static final String SAVED_URL = "https://api.rss2json.com/v1/api.json?rss_url=X";
 
     private Context context;
 
@@ -24,10 +24,10 @@ public class PreferencesUtilTest {
     }
 
     /**
-     * get Url
+     * test get default url
      */
     @Test
-    public void getValidUrl () {
+    public void defaultUrlTest () {
         //set prefs to null
         PreferencesUtil.setRssUrl(context, null);
 
@@ -35,8 +35,23 @@ public class PreferencesUtilTest {
         String rssUrl = PreferencesUtil.getRssUrl(context);
 
         // check that default value is returned
-        assertEquals (VALID_URL, rssUrl);
+        assertEquals (DEFAULT_URL, rssUrl);
+    }
+
+    /**
+     * test get saved url
+     */
+    @Test
+    public void savdUrlTest () {
+        //set prefs to null
+        PreferencesUtil.setRssUrl(context, "X");
+
+        // get url
+        String rssUrl = PreferencesUtil.getRssUrl(context);
+
+        // check that set value is returned
+        assertEquals (SAVED_URL, rssUrl);
     }
 
 
-    }
+}

@@ -86,5 +86,10 @@ public class FileUtil {
         return file;
     }
 
+    // for testing purposes here would need to be also delete of all existing temp files
+    // so that it would be possibly to start with clean state
+
+    // it could be also good to have methods to list temp files and read last created temp file
+    // but as this would be all for GREY BOX tests it's not really having priority
 
 }

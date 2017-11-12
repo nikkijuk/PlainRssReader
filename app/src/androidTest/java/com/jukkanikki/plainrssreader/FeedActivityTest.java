@@ -37,10 +37,10 @@ import static org.junit.Assert.assertThat;
 /**
  * Test interactions starting from main FeedActivity
  *
- * This is grey-box test as it looks inside app's database and view
+ * This is gray-box test as it looks inside app's database and view
  * to find out that adapter is loaded with right amount of articles
  *
- * Grey box tests are very powerful, but writing them is only possible
+ * Gray box tests are very powerful, but writing them is only possible
  * if person writing those test knows internals of app well.
  */
 @RunWith(AndroidJUnit4.class)
@@ -88,6 +88,8 @@ public class FeedActivityTest {
         // Activity is to be seen
         //
 
+        // BLACK BOX: run app using command, don't look inside of its internals
+
         // button is visible
         onView(withId(R.id.btnSettings)).check(matches(isDisplayed()));
 
@@ -110,17 +112,21 @@ public class FeedActivityTest {
         // Articles list is filled properly
         //
 
-        // GREY TEST: find recycler view from app, get adapter, find out amount of articles
+        // GRAY BOX: find recycler view from running app, get adapter, find out amount of articles
 
         // check that list contains multiple items
         RecyclerView articleView  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
         int itemCount = articleView.getAdapter().getItemCount();
+
+        // check that view contains items
         Assert.assertTrue(itemCount > 0);
 
-        // GREY TEST: find out amount of articles from db, compare to amount of articles in view
+        // GRAY BOX: find out amount of articles from db of running app, compare to amount of articles in view of runninh app
+
+        // get article count
+        long dbCount = articleDao.countArticles();
 
         // check that db has same amount of items as adapter
-        long dbCount = articleDao.countArticles();
         Assert.assertEquals(dbCount, itemCount);
 
     }

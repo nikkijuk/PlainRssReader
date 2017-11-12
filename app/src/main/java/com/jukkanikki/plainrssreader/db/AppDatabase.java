@@ -6,9 +6,18 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 /**
- * Database is singleton for retrieving handle to RoomDatabase instance.
+ * AppDatabase is singleton for retrieving handle to RoomDatabase instance.
+ *
+ * See: https://en.wikipedia.org/wiki/Singleton_pattern
  *
  * There's flag to define if database is in memory or persisted to disk.
+ *
+ * https://en.wikipedia.org/wiki/In-memory_database
+ *
+ * For this app's use cases both in memory and persisted storage are completely ok.
+ * Persistent storage is preferable when offline usage is taken as important requirement.
+ * In memory db is faster, and would generally be fine, except when external integrations
+ * through content providers and unreliable network connections are considered.
  *
  * Please see: https://developer.android.com/topic/libraries/architecture/room.html
  */
@@ -19,10 +28,14 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static final boolean IN_MEMORY = false;
 
+    /**
+     * Single instance of AppDatabase
+     */
     private static AppDatabase INSTANCE;
 
     /**
      * Return article dao
+     *
      * @return article dao
      */
     public abstract ArticleDao articleModel();
@@ -38,14 +51,14 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
 
-        /**
-         * Create in memory db
-         *
-         * Use this method if storage is needed only during lifecycle of app
-         *
-         * @param context
-         * @return
-         */
+    /**
+     * Create in memory db
+     *
+     * Use this method if storage is needed only during lifecycle of app
+     *
+     * @param context
+     * @return db
+     */
     private static AppDatabase getInMemoryDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE =
@@ -67,7 +80,7 @@ public abstract class AppDatabase extends RoomDatabase {
      * Use this method if data should be persisted over restarting app
      *
      * @param context
-     * @return
+     * @return db
      */
     private static AppDatabase getPersistedDatabase(Context context) {
         if (INSTANCE == null) {

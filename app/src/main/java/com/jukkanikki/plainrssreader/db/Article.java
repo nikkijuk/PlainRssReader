@@ -33,6 +33,7 @@ public class Article {
     public static final String COLUMN_CONTENT = "content";
 
     // primary key is mandatory
+    // primaty key is auto generated
     @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)

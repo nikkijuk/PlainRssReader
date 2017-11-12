@@ -5,9 +5,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.jukkanikki.plainrssreader.db.AppDatabase;
-import com.jukkanikki.plainrssreader.model.FeedWrapper;
-import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.util.FileUtil;
 
 import org.junit.Assert;
@@ -23,8 +20,10 @@ import java.io.File;
 @RunWith(AndroidJUnit4.class)
 public class FileUtilTest {
 
+    // url from which name for file is parsed
     private static final String TEST_URL = "http://www.jukkanikki.com/test.json";
 
+    // smallest possible json object ever
     private static final String EMPTY_JSON = "{}";
 
     private Context context;
@@ -39,7 +38,7 @@ public class FileUtilTest {
      * Write JSON to file - this test is run on android
      */
     @Test
-    public void SaveJsonFileTest () {
+    public void SaveAndReadJsonFileTest () {
 
         // create file using context, name parsed from url, and empty json as content
         File tempFile = FileUtil.createTempFile(context, TEST_URL, EMPTY_JSON);

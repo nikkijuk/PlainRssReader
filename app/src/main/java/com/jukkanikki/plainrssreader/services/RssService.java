@@ -10,7 +10,6 @@ import com.jukkanikki.plainrssreader.db.AppDatabase;
 import com.jukkanikki.plainrssreader.broadcastreceiver.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
-import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.util.DbUtil;
 import com.jukkanikki.plainrssreader.util.FileUtil;
 import com.jukkanikki.plainrssreader.util.JsonUtil;
@@ -19,6 +18,9 @@ import java.io.File;
 
 /**
  * Async logic and persistence of articles
+ *
+ * As intent services might be hard to test as they are async and initialized by system
+ * there's tests for all of operations which this service does.
  *
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
@@ -30,7 +32,7 @@ import java.io.File;
  *   saves pojos to persistent storage (with room of file) and
  *   notifies views using local broadcasts that feed is updated
  *
- * Using separate service and brodcast receiver makes process completely async
+ * Using separate service and broadcast receiver makes process completely async
  *
  * More: https://developer.android.com/training/best-background.html
  */
@@ -42,9 +44,19 @@ public class RssService extends IntentService {
         super("RssService");
     }
 
+    /**
+     * Handles request to load rss feed from external source.
+     * Source Url is saved in intent, which is given as parameter.
+     *
+     * Most of logic used in this class is implemented using utility classes and static methods
+     * which are easy to test separately in unit and instrumented integration tests.
+     *
+     * @param intent request for loading rss feed and storing it to database
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
-        Context context = getBaseContext();
+        // base context might not be present during construction of intent service
+        Context context = getBaseContext(); // get ctx
 
         // get db
         AppDatabase db = AppDatabase.getDatabase(context);
@@ -80,10 +92,9 @@ public class RssService extends IntentService {
      */
     private void sendBroadcastWithFileUri(File file) {
         if (file != null) {
-            Intent localIntent;//localIntent = new Intent(Events.CONTENT_READY_ACTION, Uri.parse(file.toURI().toString())); // intent to send locally
+            Intent localIntent = new Intent(Events.CONTENT_READY_ACTION);  // intent to send locally
 
-            localIntent = new Intent(Events.CONTENT_READY_ACTION);  // intent to send locally
-
+            // file uri is stored in instance only for debugging purposes
             String fileUri = file.toURI().toString();
             localIntent.putExtra(Events.CONTENT_READY_FILE_URI, fileUri); // pointer to file
 

@@ -12,9 +12,28 @@ import java.util.List;
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 
 /**
- * Dao for manipulating article entities
+ * Dao for manipulating article entities.
  *
- * All data access operations for article are described here with annotations
+ * DAO's are fine if app doesn't have requirement of sharing data with other processes
+ * and apps, as DAO's don't have any kind of security model and are basically
+ * tied to process where they are running. Content Providers are handy for sharing data
+ * between multiple processes and apps.
+ *
+ * https://en.wikipedia.org/wiki/Data_access_object
+ *
+ * Annotations are way of expressing object relational mapping rules.
+ * What is genuine with Room is that method signature and annotations and given sql
+ * are checked compile time, which means that problems which would be detected with
+ * most ORM systems runtime are to be seen almost immendiately when developer defines
+ * access mathods.
+ *
+ * ORM mapping is very popular concept, but has it's drawbacks. Still, it's lot better
+ * than writing all sql statements manually.
+ *
+ * https://en.wikipedia.org/wiki/Object-relational_mapping
+ *
+ * All data access operations for article are described with annotations.
+ * Room gives lot of possibilities, here I have used very limited set of them.
  *
  * Please see: https://developer.android.com/training/data-storage/room/accessing-data.html
  */

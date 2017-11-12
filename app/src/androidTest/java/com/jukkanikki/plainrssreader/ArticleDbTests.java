@@ -29,12 +29,13 @@ public class ArticleDbTests {
 
     private ArticleDao articleDao;
 
+    /**
+     * setup db and dao
+     */
     @Before
     public void setUp() {
         context = InstrumentationRegistry.getTargetContext();
-
         db = AppDatabase.getDatabase(context); // get db
-
         articleDao = db.articleModel(); // get dao for articles
     }
 

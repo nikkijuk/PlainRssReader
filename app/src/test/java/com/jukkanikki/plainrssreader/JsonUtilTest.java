@@ -1,7 +1,6 @@
 package com.jukkanikki.plainrssreader;
 
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
-import com.jukkanikki.plainrssreader.util.ArticlesUtil;
 import com.jukkanikki.plainrssreader.util.JsonUtil;
 
 import org.junit.Assert;
