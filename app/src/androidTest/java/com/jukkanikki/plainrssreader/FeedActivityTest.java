@@ -95,6 +95,9 @@ public class FeedActivityTest {
         // press ok
         //onView(withText("OK")).perform(click());
 
+        // test that preferences have changed
+        // onData ..
+
         // --
 
         // back button pressed
@@ -110,6 +113,16 @@ public class FeedActivityTest {
         int itemCount = articleView.getAdapter().getItemCount();
         Assert.assertTrue(itemCount > 0);
 
+        // GREY TEST: find out amount of articles from db, compare to amount of articles in view
+
+        // check that db has same amount of items as adapter
+        long dbCount = articleDao.countArticles();
+        Assert.assertEquals(dbCount, itemCount);
+
+        // TODO: find out if it's possibe to change device orientation thru Espresso test
+        // TODO: screen orientation might not fire configuration change
+
+        /*
         // change orientation: portrait
         mActivityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         SystemClock.sleep(200);
@@ -127,12 +140,8 @@ public class FeedActivityTest {
         RecyclerView articleView3  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
         int itemCount3 = articleView3.getAdapter().getItemCount();
         Assert.assertTrue(itemCount3 > 0);
+        */
 
-        // GREY TEST: find out amount of articles from db, compare to amount of articles in view
-
-        // check that db has same amount of items as adapter
-        long dbCount = articleDao.countArticles();
-        Assert.assertEquals(dbCount, itemCount3);
 
 
         // now: I'd need to capture screenshots of tests to validate that rotation really happens ..

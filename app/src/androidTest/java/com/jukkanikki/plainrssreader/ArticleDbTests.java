@@ -31,10 +31,6 @@ public class ArticleDbTests {
     public void setUp() {
         Context context = InstrumentationRegistry.getTargetContext();
 
-        // In memory
-//        db = AppDatabase.getInMemoryDatabase(context); // get db
-
-        // persisted
         db = AppDatabase.getDatabase(context); // get db
 
         articleDao = db.articleModel(); // get dao for articles
