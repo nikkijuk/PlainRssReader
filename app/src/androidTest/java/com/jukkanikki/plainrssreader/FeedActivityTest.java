@@ -15,9 +15,12 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withTagKey;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
@@ -25,6 +28,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  */
 @RunWith(AndroidJUnit4.class)
 public class FeedActivityTest {
+
+    private static final String NYT_SCIENCE_FEED_URL = "http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
+
+    private static final String NYT_ARTS_FEED_URL = "http://rss.nytimes.com/services/xml/rss/nyt/Arts.xml";
+
+    private static final String PREF_URL_KEY = "rss_source";
+
 
     @Rule
     public ActivityTestRule<FeedActivity> mActivityRule =
@@ -44,6 +54,22 @@ public class FeedActivityTest {
 
         // url field is shown
         onView(withText("Url")).check((matches(isDisplayed())));
+
+        // --
+
+        //TODO: Here should come changing of url
+
+        // click url
+        //onView(withText("Url")).perform(click());
+        //onView(withText("Url")).perform(click(), typeTextIntoFocusedView("NYT_ARTS_FEED_URL"));
+
+        // give text
+        //onView(withTagKey(PREF_URL_KEY)).perform(typeTextIntoFocusedView("NYT_ARTS_FEED_URL"));
+
+        // press ok
+        //onView(withText("OK")).perform(click());
+
+        // --
 
         // back button pressed
         pressBack();
