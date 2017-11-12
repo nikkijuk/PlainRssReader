@@ -84,6 +84,10 @@ public class FeedActivityTest {
     @Test
     public void settingButtonWorksTest() {
 
+        //
+        // Activity is to be seen
+        //
+
         // button is visible
         onView(withId(R.id.btnSettings)).check(matches(isDisplayed()));
 
