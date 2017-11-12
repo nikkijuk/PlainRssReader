@@ -7,7 +7,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.jukkanikki.plainrssreader.db.AppDatabase;
-import com.jukkanikki.plainrssreader.broadcastreceiver.Events;
+import com.jukkanikki.plainrssreader.Events;
 import com.jukkanikki.plainrssreader.http.HttpReader;
 import com.jukkanikki.plainrssreader.model.FeedWrapper;
 import com.jukkanikki.plainrssreader.util.DbUtil;

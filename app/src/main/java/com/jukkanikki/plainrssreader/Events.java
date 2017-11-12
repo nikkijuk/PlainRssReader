@@ -1,4 +1,4 @@
-package com.jukkanikki.plainrssreader.broadcastreceiver;
+package com.jukkanikki.plainrssreader;
 
 /**
  * Constant for content of broadcast event

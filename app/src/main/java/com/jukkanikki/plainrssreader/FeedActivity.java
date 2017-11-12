@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jukkanikki.plainrssreader.broadcastreceiver.ContentDbReadyReceiver;
-import com.jukkanikki.plainrssreader.broadcastreceiver.Events;
 import com.jukkanikki.plainrssreader.services.RssService;
 import com.jukkanikki.plainrssreader.util.PreferencesUtil;
 
