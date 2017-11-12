@@ -43,12 +43,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class FeedActivityTest {
 
-    private static final String NYT_SCIENCE_FEED_URL = "http://rss.nytimes.com/services/xml/rss/nyt/Science.xml";
-
-    private static final String NYT_ARTS_FEED_URL = "http://rss.nytimes.com/services/xml/rss/nyt/Arts.xml";
-
-    private static final String PREF_URL_KEY = "rss_source";
-
     private Context context;
 
     private AppDatabase db;
@@ -87,28 +81,6 @@ public class FeedActivityTest {
         // url field is shown
         onView(withText("Url")).check((matches(isDisplayed())));
 
-        // --
-
-        //TODO: Here should come changing of url
-
-        // click url
-        //onView(withText("Url")).perform(click());
-        //onView(withText("Url")).perform(click(), typeTextIntoFocusedView("NYT_ARTS_FEED_URL"));
-
-        // give text
-        //onView(withTagKey(PREF_URL_KEY)).perform(typeTextIntoFocusedView("NYT_ARTS_FEED_URL"));
-
-        // press ok
-        //onView(withText("OK")).perform(click());
-
-        // test that preferences have changed
-
-        // using shared prefs ..
-        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        //assertThat(preferences.getString(PREF_URL_KEY, ""), is(NYT_ARTS_FEED_URL));
-
-        // --
-
         // back button pressed
         pressBack();
 
@@ -127,35 +99,6 @@ public class FeedActivityTest {
         // check that db has same amount of items as adapter
         long dbCount = articleDao.countArticles();
         Assert.assertEquals(dbCount, itemCount);
-
-        // TODO: find out if it's possibe to change device orientation thru Espresso test
-        // TODO: screen orientation might not fire configuration change
-
-        /*
-        // change orientation: portrait
-        mActivityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        SystemClock.sleep(200);
-
-        // check that list contains multiple items
-        RecyclerView articleView2  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
-        int itemCount2 = articleView2.getAdapter().getItemCount();
-        Assert.assertTrue(itemCount2 > 0);
-
-        // change orientation: portrait
-        mActivityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        SystemClock.sleep(200);
-
-        // check that list contains multiple items
-        RecyclerView articleView3  = (RecyclerView) mActivityRule.getActivity().findViewById(R.id.articleView);
-        int itemCount3 = articleView3.getAdapter().getItemCount();
-        Assert.assertTrue(itemCount3 > 0);
-        */
-
-
-
-        // now: I'd need to capture screenshots of tests to validate that rotation really happens ..
-        // note: one sees on emulator that it happens
-        // note: if sleeps are too short this test is not reliable - might be up to speed of processor ..
 
     }
 

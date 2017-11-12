@@ -51,7 +51,7 @@ public class ArticleDbTests {
         articleDao.deleteAll(); // see that it's empty
 
         Article article = new Article();
-        article.guid = "1";
+        article.guid = "guid-1";
         article.title = "title";
         article.pubDate = "1.1.2020";
         article.link = "linkLocation";

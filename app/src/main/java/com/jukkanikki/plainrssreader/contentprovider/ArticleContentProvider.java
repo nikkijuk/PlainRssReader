@@ -16,13 +16,23 @@ import com.jukkanikki.plainrssreader.db.Article;
 import java.util.List;
 
 /**
- * This content provider is ment to share read only data with other apps
+ * This content provider is meant to share read only data with other apps.
+ *
+ * When app stores data it is done using ArticleDao directly.
  *
  * See Room ORM documentation for implementation of data access methods
  *
+ * This implementation is adapted from sample app of Google
+ *
  * Sample: https://github.com/googlesamples/android-architecture-components/tree/master/PersistenceContentProviderSample
+ *
+ * Room documentation helps to understand details
+ *
+ * See: https://developer.android.com/topic/libraries/architecture/room.html
  */
 public class ArticleContentProvider extends ContentProvider {
+
+    public static final boolean READ_ONLY = true;
 
     /** The authority of this content provider. */
     public static final String AUTHORITY = "com.nikkijuk.article.provider";
@@ -95,7 +105,7 @@ public class ArticleContentProvider extends ContentProvider {
     }
 
     /**
-     * Not supported
+     * Not supported as ContentProvider is read only. Application uses internally ArticleDao directly.
      *
      * @param uri
      * @param values
@@ -103,13 +113,38 @@ public class ArticleContentProvider extends ContentProvider {
      */
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // Which is better? return null or throw exception?
-        // throw new UnsupportedOperationException(READ_ONLY_NOT_SUPPORTED);
-        return null;
+
+        // Which is better?
+        //    return 0 (not inserted, but operation returns value)
+        //    or throw exception? (clear notification that call is illegal)
+
+        if (READ_ONLY) {
+            //return 0;
+            throw new UnsupportedOperationException(READ_ONLY_NOT_SUPPORTED);
+        }
+
+        // NOTE: if we'd need to implement this method it would look like this
+
+        switch (MATCHER.match(uri)) {
+            case CODE_ARTICLE_DIR:
+                final Context context = getContext();
+                if (context == null) {
+                    return null;
+                }
+                final long id = AppDatabase.getDatabase(context)
+                        .articleModel()
+                        .insertArticle(Article.fromContentValues(values));
+                context.getContentResolver().notifyChange(uri, null);
+                return ContentUris.withAppendedId(uri, id);
+            case CODE_ARTICLE_ITEM:
+                throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
     }
 
     /**
-     * Not supported
+     * Not supported as ContentProvider is read only. Application uses internally ArticleDao directly.
      *
      * @param uri
      * @param values
@@ -120,14 +155,39 @@ public class ArticleContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // Which is better? return 0 or throw exception?
-        // throw new UnsupportedOperationException(READ_ONLY_NOT_SUPPORTED);
-        return 0;
 
+        // Which is better?
+        //    return 0 (not updated, but operation returns value)
+        //    or throw exception? (clear notification that call is illegal)
+
+        if (READ_ONLY) {
+            //return 0;
+            throw new UnsupportedOperationException(READ_ONLY_NOT_SUPPORTED);
+        }
+
+        // NOTE: if we'd need to implement this method it would look like this
+
+        switch (MATCHER.match(uri)) {
+            case CODE_ARTICLE_DIR:
+                throw new IllegalArgumentException("Invalid URI, cannot update without ID" + uri);
+            case CODE_ARTICLE_ITEM:
+                final Context context = getContext();
+                if (context == null) {
+                    return 0;
+                }
+                final Article article = Article.fromContentValues(values);
+                article.id = ContentUris.parseId(uri);
+                final int count = AppDatabase.getDatabase(context).articleModel()
+                        .updateArticle(article);
+                context.getContentResolver().notifyChange(uri, null);
+                return count;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
     }
 
     /**
-     * Not supported
+     * Not supported as ContentProvider is read only. Application uses internally ArticleDao directly.
      *
      * @param uri
      * @param selection
@@ -136,9 +196,32 @@ public class ArticleContentProvider extends ContentProvider {
      */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Which is better? return 0 or throw exception?
-        //throw new UnsupportedOperationException(READ_ONLY_NOT_SUPPORTED);
-        return 0;
+        // Which is better?
+        //    return 0 (not deleted, but operation returns value)
+        //    or throw exception? (clear notification that call is illegal)
+
+        if (READ_ONLY) {
+            //return 0;
+            throw new UnsupportedOperationException(READ_ONLY_NOT_SUPPORTED);
+        }
+
+        switch (MATCHER.match(uri)) {
+            case CODE_ARTICLE_DIR:
+                throw new IllegalArgumentException("Invalid URI, cannot update without ID" + uri);
+            case CODE_ARTICLE_ITEM:
+                final Context context = getContext();
+                if (context == null) {
+                    return 0;
+                }
+                final int count = AppDatabase.getDatabase(context)
+                        .articleModel()
+                        .deleteById(ContentUris.parseId(uri));
+                context.getContentResolver().notifyChange(uri, null);
+                return count;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
     }
 
 }

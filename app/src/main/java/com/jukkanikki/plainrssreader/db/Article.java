@@ -9,9 +9,11 @@ import android.support.annotation.NonNull;
 /**
  * Article content.
  *
- * Added Room annotations for metadata
+ * Added Room annotations for metadata.
  *
- * See: https://developer.android.com/topic/libraries/architecture/room.html
+ * Id is generated automatically.
+ *
+ * Please see: https://developer.android.com/training/data-storage/room/defining-data.html
  */
 @Entity(tableName = Article.TABLE_NAME)
 public class Article {
@@ -20,18 +22,24 @@ public class Article {
     public static final String TABLE_NAME = "article";
 
     // The name of the ID column.
-    public static final String COLUMN_ID = "guid";
+    public static final String COLUMN_ID = "id";
 
     // column constants
     // these are not really needed, but they are added for content provider
+    public static final String COLUMN_GUID = "guid";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_PUBLISH_DATE = "pubDate";
     public static final String COLUMN_LINK = "link";
     public static final String COLUMN_CONTENT = "content";
 
     // primary key is mandatory
-    @PrimaryKey @NonNull
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)
+    public Long id;
+
+    // column info annotations are optional
+    @ColumnInfo(name = COLUMN_GUID)
     public String guid;
 
     // column info annotations are optional
@@ -61,8 +69,13 @@ public class Article {
     public static Article fromContentValues(ContentValues values) {
         final Article article = new Article();
 
+        // fill article fields
+
         if (values.containsKey(COLUMN_ID)) {
-            article.guid = values.getAsString(COLUMN_ID);
+            article.id = values.getAsLong(COLUMN_ID);
+        }
+        if (values.containsKey(COLUMN_GUID)) {
+            article.guid = values.getAsString(COLUMN_GUID);
         }
         if (values.containsKey(COLUMN_TITLE)) {
             article.title = values.getAsString(COLUMN_TITLE);
@@ -81,6 +94,10 @@ public class Article {
     }
 
     // helper getter and setter methods to conform with java beans spec
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getGuid() {
         return guid;

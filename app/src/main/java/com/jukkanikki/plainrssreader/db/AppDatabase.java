@@ -6,9 +6,13 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 /**
- * Database is singleton for retrieving handle to RoomDatabase instance
+ * Database is singleton for retrieving handle to RoomDatabase instance.
+ *
+ * There's flag to define if database is in memory or persisted to disk.
+ *
+ * Please see: https://developer.android.com/topic/libraries/architecture/room.html
  */
-@Database(entities = {Article.class}, version = 1, exportSchema = false)
+@Database(entities = {Article.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public static final String ARTICLES_DB = "ARTICLES_DB";
@@ -17,6 +21,10 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
+    /**
+     * Return article dao
+     * @return article dao
+     */
     public abstract ArticleDao articleModel();
 
     /**
@@ -46,6 +54,8 @@ public abstract class AppDatabase extends RoomDatabase {
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
                             // TODO: test if needed
                             .allowMainThreadQueries()
+                            // destruct previous version - no version migration provided
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;
@@ -67,13 +77,19 @@ public abstract class AppDatabase extends RoomDatabase {
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
                             // TODO: test if needed
                             .allowMainThreadQueries()
+                            // destruct previous version - no version migration provided
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;
     }
 
 
+    /**
+     * Tear down db
+     */
     public static void destroyInstance() {
+        INSTANCE.close();
         INSTANCE = null;
     }
 }
