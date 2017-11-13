@@ -145,7 +145,7 @@ public class FeedActivityUiAutomatorTest {
 
 
     @Test
-    public void checkSettings() throws UiObjectNotFoundException, RemoteException, InterruptedException {
+    public void checkSettings() throws UiObjectNotFoundException, RemoteException {
 
         // find settings button based on buttons description (see activity_feed.xml)
         UiObject settingsButton = mDevice.findObject(new UiSelector().description("Settings"));
