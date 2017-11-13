@@ -92,8 +92,6 @@ public class FeedActivityUiAutomatorTest {
      */
     private static final int LAUNCH_TIMEOUT = 5000;
 
-    private static final String STRING_TO_BE_TYPED = "UiAutomator";
-
     @Before
     public void startMainActivityFromHomeScreen() {
 
@@ -114,6 +112,7 @@ public class FeedActivityUiAutomatorTest {
         final Intent intent = context
                 .getPackageManager()
                 .getLaunchIntentForPackage(PACKAGE);
+
         // Clear out any previous instances
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
@@ -122,14 +121,15 @@ public class FeedActivityUiAutomatorTest {
         mDevice.wait(Until.hasObject(By.pkg(PACKAGE).depth(0)),
                 LAUNCH_TIMEOUT);
 
-
         //
         // Set up internals which allow us to peek to running app using Espresso
         //
 
-        context = InstrumentationRegistry.getTargetContext(); // get context
-        db = AppDatabase.getDatabase(context); // get db
-        articleDao = db.articleModel(); // get dao for articles
+        // get Apps db
+        db = AppDatabase.getDatabase(context);
+
+        // get dao for articles
+        articleDao = db.articleModel();
     }
 
 
