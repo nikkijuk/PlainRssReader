@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -15,6 +16,7 @@ import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.jukkanikki.plainrssreader.db.AppDatabase;
 import com.jukkanikki.plainrssreader.db.ArticleDao;
@@ -54,6 +56,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class FeedActivityUiAutomatorTest {
 
+    private static final String TAG = "FeedUiAutomatorTest";
+
+
     /**
      * Espresso rule for FeedActivity
      */
@@ -91,6 +96,12 @@ public class FeedActivityUiAutomatorTest {
      * Wait for app to start
      */
     private static final int LAUNCH_TIMEOUT = 5000;
+
+    /**
+     * Wait for app to start
+     */
+    private static final int CONFIGURATION_CHANGE_TIMEOUT = 5000;
+
 
     @Before
     public void startMainActivityFromHomeScreen() {
@@ -134,13 +145,22 @@ public class FeedActivityUiAutomatorTest {
 
 
     @Test
-    public void checkSettings() throws UiObjectNotFoundException {
+    public void checkSettings() throws UiObjectNotFoundException, RemoteException, InterruptedException {
 
         // find settings button based on buttons description (see activity_feed.xml)
         UiObject settingsButton = mDevice.findObject(new UiSelector().description("Settings"));
 
         // Simulate a click to bring up SettingsActivity with Preferences Fragement.
         settingsButton.clickAndWaitForNewWindow();
+
+        // TODO: test seems to run also when configuration change is forced with rotation
+        // TODO: but emulator doesn't build screen anymore, which is strange
+
+        // rotate
+        //mDevice.setOrientationLeft();
+
+        // wait that activity builds itself again
+        // mDevice.waitForIdle(CONFIGURATION_CHANGE_TIMEOUT);
 
         // go back
         pressBack();
@@ -165,6 +185,8 @@ public class FeedActivityUiAutomatorTest {
 
         // check that db has same amount of items as adapter
         Assert.assertEquals(dbCount, itemCount);
+
+        Log.d(TAG, "Found items :"+dbCount);
 
     }
 
