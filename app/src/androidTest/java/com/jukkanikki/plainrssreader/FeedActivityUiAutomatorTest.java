@@ -1,10 +1,12 @@
 package com.jukkanikki.plainrssreader;
 
+import android.app.UiAutomation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -155,12 +157,13 @@ public class FeedActivityUiAutomatorTest {
 
         // TODO: test seems to run also when configuration change is forced with rotation
         // TODO: but emulator doesn't build screen anymore, which is strange
+        // TODO: log shows anyway that process was ok and run to the end - test is also green
 
         // rotate
-        //mDevice.setOrientationLeft();
+        mDevice.setOrientationLeft();
 
         // wait that activity builds itself again
-        // mDevice.waitForIdle(CONFIGURATION_CHANGE_TIMEOUT);
+        mDevice.waitForIdle(CONFIGURATION_CHANGE_TIMEOUT);
 
         // go back
         pressBack();
