@@ -30,6 +30,7 @@
             android:layout_above="@+id/articleView"
             android:layout_alignParentStart="true"
             android:onClick="openSettings"
-            android:text="@string/button_settings" />
+            android:text="@string/button_settings"
+            android:contentDescription="Settings"/>
 
 </RelativeLayout>

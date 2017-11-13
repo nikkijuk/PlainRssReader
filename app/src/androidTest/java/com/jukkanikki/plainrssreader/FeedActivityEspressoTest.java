@@ -44,7 +44,7 @@ import static org.junit.Assert.assertThat;
  * if person writing those test knows internals of app well.
  */
 @RunWith(AndroidJUnit4.class)
-public class FeedActivityTest {
+public class FeedActivityEspressoTest {
 
     private Context context;
 
