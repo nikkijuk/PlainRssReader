@@ -51,6 +51,9 @@ public class ArticleContentProviderTest {
     @Test
     public void article_initiallyEmpty() {
 
+        // this wasn't needed with in memory db - now db can contain records, so prepare it
+        db.articleModel().deleteAll();
+
         // get articles
         final Cursor cursor = mContentResolver.query(ArticleContentProvider.URI_ARTICLE,
                 new String[]{Article.COLUMN_TITLE}, null, null, null);
@@ -66,6 +69,9 @@ public class ArticleContentProviderTest {
      */
     @Test
     public void article_query() {
+
+        // this wasn't needed with in memory db - now db can contain records, so prepare it
+        db.articleModel().deleteAll();
 
         // prepare test data
         Article article = new Article();

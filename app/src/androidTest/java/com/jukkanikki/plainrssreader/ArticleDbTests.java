@@ -49,6 +49,8 @@ public class ArticleDbTests {
      */
     @Test
     public void storeAndReadArticles() {
+
+        // this wasn't needed with in memory db - now db can contain records, so prepare it
         articleDao.deleteAll(); // see that it's empty
 
         Article article = new Article();

@@ -47,6 +47,7 @@ public class DbUtilTest {
 
         // marshal to feed wrapper container
         FeedWrapper feed = JsonUtil.convertToObjects(JSON);
+        Assert.assertEquals(feed.getItems().size(), 1);
 
         // write articles from feed to SQLite db using Room
         DbUtil.populateDbFromFeed(db, feed);
