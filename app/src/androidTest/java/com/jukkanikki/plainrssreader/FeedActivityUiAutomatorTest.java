@@ -160,6 +160,8 @@ public class FeedActivityUiAutomatorTest {
         // TODO: log shows anyway that process was ok and run to the end - test is also green
 
         // rotate
+        // TODO: this crashes emulator on RHEL 7 - but seems to work on my Osx High Sierra
+        // TODO: it should be seen if there's reliable way to simulate configuration change
         //mDevice.setOrientationLeft();
 
         // wait that activity builds itself again

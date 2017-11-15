@@ -191,6 +191,8 @@ Want to try it with code? Then [android testing codelab] is very useful.
 
 Please see this in context of [Testing pyramid] and what kind of value each type of test provides. 
 
+See what is already implemented by [Running all tests].
+
 # Use cases
 
 [yEd] was used to draw simple diagram of use cases.
@@ -412,6 +414,8 @@ User given url is not checked (syntax, existence). When app uses incorrect url a
 [Gray Box Testing]: https://en.wikipedia.org/wiki/Gray_box_testing
 
 [Black Box Testing]: https://en.wikipedia.org/wiki/Black_box_testing
+
+[Running all tests]: https://stackoverflow.com/questions/41116767/run-all-unit-tests-in-android-studio
 
 [SQLite]: https://www.sqlite.org/ "Low footprint embedded database"
 
